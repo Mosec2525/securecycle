@@ -2,7 +2,7 @@
 
 A VS Code extension that scans your code for security issues — powered by [Semgrep](https://semgrep.dev) and designed for developers who move fast.
 
-> Built as a capstone project. MVP-first, local-first, no cloud required.
+
 
 ---
 
