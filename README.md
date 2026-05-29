@@ -199,6 +199,4 @@ vibe-coding-security/
 | v0.9.0 | Packaging audit and VSIX release workflow | Complete |
 | v1.0.0 | Stable release docs, screenshots, test coverage, and release notes | Complete |
 
-## License
 
-MIT. See [LICENSE](LICENSE).
