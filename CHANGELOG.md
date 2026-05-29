@@ -32,6 +32,67 @@ VibeSec 1.0.0 is the repository-hardening release: documentation now matches the
 
 ---
 
+## [0.8.6] - Multi-policy activation fix
+
+### Changed
+- Replaced the one-normal plus one-taint selector model with `activePolicyFiles`, allowing any number of active policy files.
+- Normal and taint policies can now be active together in any combination.
+- Workspace selector files now use `activePolicyFiles` as the source of truth while keeping `presets` as a compatibility mirror for bundled default and taint policies.
+
+### Fixed
+- Empty active policy selections now produce zero findings instead of silently falling back to `rules/default.yaml`.
+- Deleting an active custom policy removes it from `activePolicyFiles` instead of re-enabling default rules.
+
+### Added
+- Delete buttons for custom policy files from the Rules list and detail page.
+- Empty normal and taint policy templates so zero-rule policies behave predictably.
+
+---
+
+## [0.8.5] - Dual policy activation
+
+### Changed
+- Added support for keeping one normal policy and one taint policy active at the same time.
+- Activating a normal policy replaces only the previous normal policy.
+- Activating a taint policy replaces only the previous taint policy.
+- Scans merge active normal and taint policies before running Semgrep.
+
+### Added
+- Workspace selector support for `activeNormalPolicyFile` and `activeTaintPolicyFile`.
+- Backward compatibility for older `.vibesec.yaml` files using `presets` or `activePolicyFile`.
+
+---
+
+## [0.8.4] - Groq provider support
+
+### Added
+- Added Groq as a first-class AI provider.
+- Groq API keys beginning with `gsk_` are detected automatically and saved under the Groq provider.
+- Default Groq endpoint is `https://api.groq.com/openai/v1/chat/completions`.
+- Default Groq model is `llama-3.1-8b-instant`.
+
+### Changed
+- Pasting a Groq key into any API key field automatically selects Groq and applies the Groq default model.
+- Custom / Other remains available for OpenAI-compatible providers that require a custom endpoint.
+
+---
+
+## [0.8.3] - Custom provider key flow
+
+### Fixed
+- Saving an API key now also selects that provider as the active provider.
+- The Settings page action now says `Save & use` so provider switching is explicit.
+- Testing a provider reads the configured model field correctly and falls back to built-in provider defaults when needed.
+- Removed the duplicated Custom / Other API key row.
+
+### Changed
+- Custom / Other API keys are stored separately in VS Code SecretStorage.
+- Custom / Other requires an exact model name instead of accidentally reusing a built-in provider model.
+- Custom endpoints accept either a full `/chat/completions` URL or a base `/v1` URL that VibeSec completes automatically.
+- Added OpenRouter-friendly headers and improved OpenAI-compatible response parsing.
+
+---
+
 ## [0.7.0] — Sprint 7 "Taint"
 
 ### Overview
