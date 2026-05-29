@@ -1,13 +1,45 @@
 {
   "name": "vibesec",
   "displayName": "VibeSec",
-  "description": "AI-assisted security scanner for vibe coders",
-  "version": "0.8.6",
+  "description": "Local-first VS Code security scanner powered by Semgrep with AI-assisted fix prompts.",
+  "version": "1.0.0",
+  "publisher": "mosec2525",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mosec2525/vibe-coding-security.git"
+  },
+  "homepage": "https://github.com/Mosec2525/vibe-coding-security#readme",
+  "bugs": {
+    "url": "https://github.com/Mosec2525/vibe-coding-security/issues"
+  },
   "engines": {
     "vscode": "^1.85.0"
   },
   "categories": [
-    "Linters"
+    "Linters",
+    "Other"
+  ],
+  "keywords": [
+    "security",
+    "semgrep",
+    "sast",
+    "static-analysis",
+    "secure-coding",
+    "code-scanning",
+    "taint-analysis",
+    "ai"
+  ],
+  "galleryBanner": {
+    "color": "#0f172a",
+    "theme": "dark"
+  },
+  "badges": [
+    {
+      "url": "https://github.com/Mosec2525/vibe-coding-security/actions/workflows/ci.yml/badge.svg",
+      "href": "https://github.com/Mosec2525/vibe-coding-security/actions/workflows/ci.yml",
+      "description": "CI"
+    }
   ],
   "activationEvents": [],
   "main": "./out/extension.js",
@@ -219,7 +251,7 @@
         "vibesec.fileExtensions": {
           "type": "string",
           "default": ".py .pyi .js .jsx .mjs .cjs .ts .tsx .java .go .rb .php .c .h .cpp .hpp .cc .cs .rs .swift .kt .kts .scala .yaml .yml .json .html .htm .sh .bash",
-          "description": "Space-separated list of file extensions VibeSec will scan (e.g. \".py .ts .go\"). Files outside this list are skipped during multi-target scans and shown as \"not scannable\" in the Scan panel.",
+          "description": "Space-separated list of file extensions VibeSec will scan (e.g. \".py .ts .go\"). Files outside this list are skipped during multi-target scans and shown as \"not scannable\" in the Analysis panel.",
           "scope": "resource"
         },
         "vibesec.llmProvider": {
@@ -324,7 +356,7 @@
           {
             "id": "vibesec.step.prompts",
             "title": "Hook up an AI provider for fix prompts",
-            "description": "Add an API key (OpenAI, Anthropic, or Gemini) and VibeSec can generate copy-paste fix prompts for every finding.\n\n[$(key) Set API Key](command:vibesec.setApiKey)",
+            "description": "Add an API key (OpenAI, Anthropic, Gemini, Groq, or a custom OpenAI-compatible provider) and VibeSec can generate copy-paste fix prompts for every finding.\n\n[$(key) Set API Key](command:vibesec.setApiKey)",
             "completionEvents": [
               "onCommand:vibesec.setApiKey"
             ]
@@ -335,6 +367,12 @@
   },
   "scripts": {
     "compile": "tsc -p ./ && node esbuild.design.mjs",
+    "test": "npm run compile && node --test test/llmModels.test.js test/packageMetadata.test.js test/policy.test.js",
+    "audit": "npm audit --audit-level=moderate",
+    "package:ls": "npm run compile && vsce ls",
+    "package:vsix": "npm run compile && vsce package",
+    "release:dry-run": "npm test && npm run audit && npm run package:ls",
+    "release:vsix": "npm test && npm run audit && npm run package:vsix",
     "watch": "tsc -watch -p ./",
     "watch:webview": "node esbuild.design.mjs --watch",
     "build:webview": "node esbuild.design.mjs"
@@ -350,6 +388,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.9.1",
     "esbuild": "^0.28.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

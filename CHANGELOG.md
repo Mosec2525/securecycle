@@ -4,6 +4,34 @@ All notable changes to VibeSec are documented here.
 
 ---
 
+## [1.0.0] - 2026-05-29
+
+### Overview
+VibeSec 1.0.0 is the repository-hardening release: documentation now matches the current GitHub repository and extension UI, Marketplace-facing metadata is present in the extension manifest, tests run in CI, and release packaging has an auditable VSIX path.
+
+### Added
+- Marketplace metadata in `package.json`: publisher, license, repository, homepage, bugs URL, categories, keywords, gallery banner, and CI badge.
+- Node test suites for release-critical behavior:
+  - policy loading fallbacks and explicit empty policy selectors
+  - provider/model validation for OpenAI, Anthropic, Gemini, Groq, and custom endpoints
+  - package/VSIX metadata checks that protect runtime dependency packaging
+- CI test and VSIX file-audit steps on every push and pull request.
+- Tag-based release workflow that builds a VSIX, uploads it as an artifact, and attaches it to the matching GitHub release.
+- `docs/release-checklist.md` with the repeatable release process for version bumps, test validation, package audits, and release tagging.
+
+### Changed
+- README updated to use the canonical clone URL `https://github.com/Mosec2525/vibe-coding-security.git`.
+- README commands and screenshots now describe the current Analysis panel and Control Center instead of older Scan/Findings panel wording.
+- Package version aligned to `1.0.0`.
+- `.vscodeignore` tightened for release packaging while preserving production dependencies required by the compiled extension.
+
+### Build / pipeline
+- `npm test` now compiles the extension and runs Node's built-in test runner.
+- `npm run release:dry-run` runs tests, dependency audit, and VSIX file listing.
+- `npm run release:vsix` runs tests, dependency audit, and produces a `.vsix` package.
+
+---
+
 ## [0.7.0] — Sprint 7 "Taint"
 
 ### Overview
