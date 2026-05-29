@@ -83,8 +83,8 @@ semgrep --version
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/Moawiah188/vibesec.git
-cd vibesec
+git clone https://github.com/Mosec2525/vibe-coding-security.git
+cd vibe-coding-security
 ```
 
 ### 2. Install dependencies
