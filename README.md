@@ -23,6 +23,8 @@ docker run --rm -v "${PWD}:/workspace" mosec2525/vibesec:latest
 
 Docker Hub: <https://hub.docker.com/r/mosec2525/vibesec>
 
+![VibeSec Docker scanner command and output](docs/docker-screenshots/vibesec-docker-scan-output.png)
+
 ## What It Does
 
 1. Run `VibeSec: Scan Current File`, `VibeSec: Scan Whole Project`, or right-click files/folders and run `VibeSec: Scan Selected`.

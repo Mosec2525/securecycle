@@ -18,6 +18,8 @@ docker run --rm -v "${PWD}:/workspace" mosec2525/vibesec:latest
 
 Docker pulls the image automatically the first time. After that, the image is cached locally and runs faster.
 
+![VibeSec Docker scanner command and output](docker-screenshots/vibesec-docker-scan-output.png)
+
 ## Build Locally
 
 ```bash
