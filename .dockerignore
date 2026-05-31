@@ -1,0 +1,14 @@
+.git
+.github
+.vscode
+node_modules
+out
+dist
+build
+coverage
+*.vsix
+npm-debug.log*
+docs/real-screenshots
+docs/highlighted-function-screens
+test-samples
+tools

@@ -367,12 +367,13 @@
   },
   "scripts": {
     "compile": "tsc -p ./ && node esbuild.design.mjs",
-    "test": "npm run compile && node --test test/llmModels.test.js test/packageMetadata.test.js test/policy.test.js",
+    "test": "npm run compile && node --test test/llmModels.test.js test/packageMetadata.test.js test/policy.test.js test/cli.test.js",
     "audit": "npm audit --audit-level=moderate",
     "package:ls": "npm run compile && vsce ls",
     "package:vsix": "npm run compile && vsce package",
     "release:dry-run": "npm test && npm run audit && npm run package:ls",
     "release:vsix": "npm test && npm run audit && npm run package:vsix",
+    "docker:build": "docker build -t vibesec:local .",
     "watch": "tsc -watch -p ./",
     "watch:webview": "node esbuild.design.mjs --watch",
     "build:webview": "node esbuild.design.mjs"

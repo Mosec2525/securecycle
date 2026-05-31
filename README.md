@@ -56,6 +56,29 @@ pip install semgrep
 semgrep --version
 ```
 
+## Docker Scanner
+
+Use the Docker scanner when you want zero host setup for Semgrep:
+
+```bash
+docker run --rm -v "$PWD:/workspace" ghcr.io/mosec2525/vibesec:latest
+```
+
+PowerShell:
+
+```powershell
+docker run --rm -v "${PWD}:/workspace" ghcr.io/mosec2525/vibesec:latest
+```
+
+The image scans `/workspace` by default, uses `.vibesec.yaml` when present, and exits `1` when findings are detected. For local image development:
+
+```bash
+npm run docker:build
+docker run --rm -v "$PWD:/workspace" vibesec:local
+```
+
+See [docs/docker.md](docs/docker.md) for JSON output, exit codes, and publishing notes.
+
 ## Installation for Development
 
 ```bash
@@ -157,6 +180,7 @@ One-time setup:
 | `npm run audit` | Run `npm audit --audit-level=moderate` |
 | `npm run package:ls` | Compile and list files that will be included in the VSIX |
 | `npm run package:vsix` | Compile and create a local `.vsix` package |
+| `npm run docker:build` | Build the local zero-dependency scanner image as `vibesec:local` |
 | `npm run release:dry-run` | Run tests, audit, and VSIX file audit |
 | `npm run release:vsix` | Run tests, audit, and create a VSIX |
 
@@ -185,6 +209,7 @@ vibe-coding-security/
 |-- test-samples/            Intentionally vulnerable sample project files
 |-- docs/                    Screenshots, release documentation, rule references
 |-- .github/workflows/       CI and release automation
+|-- Dockerfile               Zero-dependency scanner image with Semgrep bundled
 |-- package.json             VS Code extension manifest and scripts
 |-- package-lock.json        Locked npm dependency graph
 |-- README.md                User and contributor documentation
