@@ -7,6 +7,22 @@ VibeSec is a local-first VS Code extension that scans source code for security i
 
 Repository: <https://github.com/Mosec2525/vibe-coding-security>
 
+## Run With Docker
+
+Anyone can run VibeSec from Docker Hub without installing Semgrep manually. Docker downloads the image and runs VibeSec with the tool, Semgrep, and the bundled rules already included.
+
+```bash
+docker run --rm -v "$PWD:/workspace" mosec2525/vibesec:latest
+```
+
+PowerShell:
+
+```powershell
+docker run --rm -v "${PWD}:/workspace" mosec2525/vibesec:latest
+```
+
+Docker Hub: <https://hub.docker.com/r/mosec2525/vibesec>
+
 ## What It Does
 
 1. Run `VibeSec: Scan Current File`, `VibeSec: Scan Whole Project`, or right-click files/folders and run `VibeSec: Scan Selected`.
@@ -45,9 +61,10 @@ No scanner account, no telemetry, and no cloud backend are required. API keys fo
 
 ## Requirements
 
-- VS Code 1.85 or later
+- Docker only for the zero-dependency Docker scanner
+- VS Code 1.85 or later for the extension UI
+- Semgrep CLI on `PATH` only when running scans from the VS Code extension without Docker
 - Node.js 20 or later for development and release packaging
-- Semgrep CLI on `PATH` for running scans
 
 Install Semgrep:
 
@@ -58,7 +75,7 @@ semgrep --version
 
 ## Docker Scanner
 
-Use the Docker scanner when you want zero host setup for Semgrep:
+Use the Docker scanner when you want zero host setup for Semgrep. This is the easiest install path for most users:
 
 ```bash
 docker run --rm -v "$PWD:/workspace" mosec2525/vibesec:latest

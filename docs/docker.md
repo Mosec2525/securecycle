@@ -1,6 +1,22 @@
 # VibeSec Docker Scanner
 
-The Docker image bundles VibeSec's CLI scanner with Semgrep, so users can scan a project without installing Semgrep on the host.
+The Docker image bundles VibeSec's CLI scanner with Semgrep, so users can scan a project without installing Semgrep on the host. Users only need Docker.
+
+## Install And Run From Docker Hub
+
+From any project directory:
+
+```bash
+docker run --rm -v "$PWD:/workspace" mosec2525/vibesec:latest
+```
+
+PowerShell:
+
+```powershell
+docker run --rm -v "${PWD}:/workspace" mosec2525/vibesec:latest
+```
+
+Docker pulls the image automatically the first time. After that, the image is cached locally and runs faster.
 
 ## Build Locally
 
