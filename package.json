@@ -1,17 +1,17 @@
 {
-  "name": "vibesec",
-  "displayName": "VibeSec",
-  "description": "Local-first VS Code security scanner powered by Semgrep with AI-assisted fix prompts.",
+  "name": "securecycle",
+  "displayName": "SecureCycle",
+  "description": "Security across every phase of the software development lifecycle with local Semgrep scanning and AI-assisted fix prompts.",
   "version": "1.0.0",
   "publisher": "mosec2525",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Mosec2525/vibe-coding-security.git"
+    "url": "https://github.com/Mosec2525/securecycle.git"
   },
-  "homepage": "https://github.com/Mosec2525/vibe-coding-security#readme",
+  "homepage": "https://github.com/Mosec2525/securecycle#readme",
   "bugs": {
-    "url": "https://github.com/Mosec2525/vibe-coding-security/issues"
+    "url": "https://github.com/Mosec2525/securecycle/issues"
   },
   "engines": {
     "vscode": "^1.85.0"
@@ -28,6 +28,8 @@
     "secure-coding",
     "code-scanning",
     "taint-analysis",
+    "secure-sdlc",
+    "devsecops",
     "ai"
   ],
   "galleryBanner": {
@@ -36,8 +38,8 @@
   },
   "badges": [
     {
-      "url": "https://github.com/Mosec2525/vibe-coding-security/actions/workflows/ci.yml/badge.svg",
-      "href": "https://github.com/Mosec2525/vibe-coding-security/actions/workflows/ci.yml",
+      "url": "https://github.com/Mosec2525/securecycle/actions/workflows/ci.yml/badge.svg",
+      "href": "https://github.com/Mosec2525/securecycle/actions/workflows/ci.yml",
       "description": "CI"
     }
   ],
@@ -48,86 +50,86 @@
       {
         "command": "vibesec.scanCurrentFile",
         "title": "Scan Current File",
-        "category": "VibeSec",
+        "category": "SecureCycle",
         "icon": "$(play)"
       },
       {
         "command": "vibesec.goToFinding",
         "title": "Go to Finding",
-        "category": "VibeSec"
+        "category": "SecureCycle"
       },
       {
         "command": "vibesec.reloadPolicy",
         "title": "Reload Policy",
-        "category": "VibeSec",
+        "category": "SecureCycle",
         "icon": "$(refresh)"
       },
       {
         "command": "vibesec.openPolicyFile",
         "title": "Open Policy File",
-        "category": "VibeSec"
+        "category": "SecureCycle"
       },
       {
         "command": "vibesec.copyDescription",
         "title": "Copy Description",
-        "category": "VibeSec",
+        "category": "SecureCycle",
         "icon": "$(copy)"
       },
       {
         "command": "vibesec.scanSelected",
         "title": "Scan Selected",
-        "category": "VibeSec",
+        "category": "SecureCycle",
         "icon": "$(play)"
       },
       {
         "command": "vibesec.scanWorkspace",
         "title": "Scan Whole Project",
-        "category": "VibeSec",
+        "category": "SecureCycle",
         "icon": "$(run-all)"
       },
       {
         "command": "vibesec.setApiKey",
         "title": "Set API Key",
-        "category": "VibeSec"
+        "category": "SecureCycle"
       },
       {
         "command": "vibesec.clearApiKey",
         "title": "Clear API Key",
-        "category": "VibeSec"
+        "category": "SecureCycle"
       },
       {
         "command": "vibesec.testApiKey",
         "title": "Test API Key",
-        "category": "VibeSec"
+        "category": "SecureCycle"
       },
       {
         "command": "vibesec.generatePrompts",
         "title": "Generate Prompts",
-        "category": "VibeSec",
+        "category": "SecureCycle",
         "icon": "$(sparkle)"
       },
       {
         "command": "vibesec.copyPromptForVuln",
         "title": "Copy Prompt for Vulnerability",
-        "category": "VibeSec",
+        "category": "SecureCycle",
         "icon": "$(comment-discussion)"
       },
       {
         "command": "vibesec.copyPromptForFile",
         "title": "Copy Prompt for File",
-        "category": "VibeSec",
+        "category": "SecureCycle",
         "icon": "$(comment-discussion)"
       },
       {
         "command": "vibesec.copyPromptForAll",
         "title": "Copy Prompt for All Findings",
-        "category": "VibeSec",
+        "category": "SecureCycle",
         "icon": "$(comment-discussion)"
       },
       {
         "command": "vibesec.openControlCenter",
         "title": "Open Control Center",
-        "category": "VibeSec",
+        "category": "SecureCycle",
         "icon": "$(settings-gear)"
       }
     ],
@@ -135,7 +137,7 @@
       "activitybar": [
         {
           "id": "vibesec",
-          "title": "VibeSec",
+          "title": "SecureCycle",
           "icon": "media/vibesec-icon.svg"
         }
       ]
@@ -146,7 +148,7 @@
           "id": "vibesec.analysisPanel",
           "name": "Analysis",
           "type": "webview",
-          "contextualTitle": "VibeSec"
+          "contextualTitle": "SecureCycle"
         }
       ]
     },
@@ -198,7 +200,7 @@
     "colors": [
       {
         "id": "vibesec.errorForeground",
-        "description": "Color for error-severity findings in the VibeSec panel",
+        "description": "Color for error-severity findings in the SecureCycle panel",
         "defaults": {
           "dark": "#F48771",
           "light": "#E51400",
@@ -208,7 +210,7 @@
       },
       {
         "id": "vibesec.warningForeground",
-        "description": "Color for warning-severity findings in the VibeSec panel",
+        "description": "Color for warning-severity findings in the SecureCycle panel",
         "defaults": {
           "dark": "#CCA700",
           "light": "#915100",
@@ -218,7 +220,7 @@
       },
       {
         "id": "vibesec.infoForeground",
-        "description": "Color for info-severity findings in the VibeSec panel",
+        "description": "Color for info-severity findings in the SecureCycle panel",
         "defaults": {
           "dark": "#75BEFF",
           "light": "#306EAD",
@@ -228,7 +230,7 @@
       }
     ],
     "configuration": {
-      "title": "VibeSec",
+      "title": "SecureCycle",
       "properties": {
         "vibesec.semgrepPath": {
           "type": "string",
@@ -245,13 +247,13 @@
         "vibesec.showInlineDecorations": {
           "type": "boolean",
           "default": true,
-          "description": "Show inline diagnostic squiggles for VibeSec findings directly in the editor.",
+          "description": "Show inline diagnostic squiggles for SecureCycle findings directly in the editor.",
           "scope": "resource"
         },
         "vibesec.fileExtensions": {
           "type": "string",
           "default": ".py .pyi .js .jsx .mjs .cjs .ts .tsx .java .go .rb .php .c .h .cpp .hpp .cc .cs .rs .swift .kt .kts .scala .yaml .yml .json .html .htm .sh .bash",
-          "description": "Space-separated list of file extensions VibeSec will scan (e.g. \".py .ts .go\"). Files outside this list are skipped during multi-target scans and shown as \"not scannable\" in the Analysis panel.",
+          "description": "Space-separated list of file extensions SecureCycle will scan (e.g. \".py .ts .go\"). Files outside this list are skipped during multi-target scans and shown as \"not scannable\" in the Analysis panel.",
           "scope": "resource"
         },
         "vibesec.llmProvider": {
@@ -267,11 +269,11 @@
             "OpenAI (GPT models). Requires an OpenAI API key.",
             "Anthropic (Claude models). Requires an Anthropic API key.",
             "Google Gemini. Requires a Google AI Studio API key.",
-            "Groq. Paste a Groq gsk_ API key; VibeSec fills the Groq endpoint and default model automatically.",
+            "Groq. Paste a Groq gsk_ API key; SecureCycle fills the Groq endpoint and default model automatically.",
             "Custom/OpenAI-compatible provider. Requires an API key, model name, and chat completions endpoint."
           ],
           "default": "anthropic",
-          "description": "Which AI provider to use when generating fix prompts. Set the matching API key via the command \"VibeSec: Set API Key\".",
+          "description": "Which AI provider to use when generating fix prompts. Set the matching API key via the command \"SecureCycle: Set API Key\".",
           "scope": "resource"
         },
         "vibesec.llmModel": {
@@ -299,7 +301,7 @@
             "A single prompt covering every finding in the scan. Cheapest possible (one API call) but the AI gets a large context."
           ],
           "default": "perFile",
-          "description": "How VibeSec should slice prompts when you click \"Generate Prompts\". You can change this any time without re-scanning.",
+          "description": "How SecureCycle should slice prompts when you click \"Generate Prompts\". You can change this any time without re-scanning.",
           "scope": "resource"
         },
         "vibesec.llmCustomProviderName": {
@@ -319,13 +321,13 @@
     "walkthroughs": [
       {
         "id": "vibesec.gettingStarted",
-        "title": "Get started with VibeSec",
+        "title": "Get started with SecureCycle",
         "description": "Scan your code for security issues in three steps.",
         "steps": [
           {
             "id": "vibesec.step.install",
             "title": "Install Semgrep",
-            "description": "VibeSec uses Semgrep under the hood. Install it once and you're set.\n\n```\npip install semgrep\n```\n\n[Open Terminal](command:workbench.action.terminal.new)",
+            "description": "SecureCycle uses Semgrep under the hood. Install it once and you're set.\n\n```\npip install semgrep\n```\n\n[Open Terminal](command:workbench.action.terminal.new)",
             "media": {
               "markdown": "media/walkthrough/install.md"
             },
@@ -334,7 +336,7 @@
           {
             "id": "vibesec.step.scan",
             "title": "Run your first scan",
-            "description": "Open any file and run a scan — findings appear in the VibeSec panel on the left.\n\n[$(play) Scan Current File](command:vibesec.scanCurrentFile)",
+            "description": "Open any file and run a scan — findings appear in the SecureCycle panel on the left.\n\n[$(play) Scan Current File](command:vibesec.scanCurrentFile)",
             "media": {
               "markdown": "media/walkthrough/scan.md"
             },
@@ -356,7 +358,7 @@
           {
             "id": "vibesec.step.prompts",
             "title": "Hook up an AI provider for fix prompts",
-            "description": "Add an API key (OpenAI, Anthropic, Gemini, Groq, or a custom OpenAI-compatible provider) and VibeSec can generate copy-paste fix prompts for every finding.\n\n[$(key) Set API Key](command:vibesec.setApiKey)",
+            "description": "Add an API key (OpenAI, Anthropic, Gemini, Groq, or a custom OpenAI-compatible provider) and SecureCycle can generate copy-paste fix prompts for every finding.\n\n[$(key) Set API Key](command:vibesec.setApiKey)",
             "completionEvents": [
               "onCommand:vibesec.setApiKey"
             ]
@@ -373,7 +375,7 @@
     "package:vsix": "npm run compile && vsce package",
     "release:dry-run": "npm test && npm run audit && npm run package:ls",
     "release:vsix": "npm test && npm run audit && npm run package:vsix",
-    "docker:build": "docker build -t vibesec:local .",
+    "docker:build": "docker build -t securecycle:local .",
     "watch": "tsc -watch -p ./",
     "watch:webview": "node esbuild.design.mjs --watch",
     "build:webview": "node esbuild.design.mjs"

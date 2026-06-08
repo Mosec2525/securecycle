@@ -6,11 +6,13 @@ test("package manifest includes release and Marketplace metadata", () => {
   const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
 
   assert.equal(pkg.version, "1.0.0");
+  assert.equal(pkg.name, "securecycle");
+  assert.equal(pkg.displayName, "SecureCycle");
   assert.equal(pkg.publisher, "mosec2525");
   assert.equal(pkg.license, "MIT");
-  assert.equal(pkg.repository?.url, "https://github.com/Mosec2525/vibe-coding-security.git");
-  assert.equal(pkg.homepage, "https://github.com/Mosec2525/vibe-coding-security#readme");
-  assert.equal(pkg.bugs?.url, "https://github.com/Mosec2525/vibe-coding-security/issues");
+  assert.equal(pkg.repository?.url, "https://github.com/Mosec2525/securecycle.git");
+  assert.equal(pkg.homepage, "https://github.com/Mosec2525/securecycle#readme");
+  assert.equal(pkg.bugs?.url, "https://github.com/Mosec2525/securecycle/issues");
   assert.ok(pkg.keywords.includes("security"));
   assert.ok(pkg.keywords.includes("semgrep"));
   assert.ok(pkg.galleryBanner);
@@ -43,7 +45,8 @@ test("README uses canonical repository and current UI terminology", () => {
   const oldCloneTarget = ["Moawiah", "188/vibesec.git"].join("");
   const oldCommandName = ["Refresh", "File", "Tree"].join(" ");
 
-  assert.match(readme, /https:\/\/github\.com\/Mosec2525\/vibe-coding-security\.git/);
+  assert.match(readme, /https:\/\/github\.com\/Mosec2525\/securecycle\.git/);
+  assert.match(readme, /Security across every phase of the software development lifecycle/);
   assert.match(readme, /Control Center/);
   assert.match(readme, /Analysis sidebar/);
   assert.equal(readme.includes(oldCloneTarget), false);

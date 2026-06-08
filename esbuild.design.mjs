@@ -1,4 +1,4 @@
-// Bundles the React-based VibeSec webviews into IIFEs that can be loaded
+// Bundles the React-based SecureCycle webviews into IIFEs that can be loaded
 // by VS Code under a strict CSP nonce.
 //
 // Outputs:

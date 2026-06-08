@@ -32,7 +32,7 @@ interface ScanResult {
   policyErrors: string[];
 }
 
-const HELP = `VibeSec CLI
+const HELP = `SecureCycle CLI
 
 Usage:
   vibesec scan [target] [options]
@@ -64,7 +64,7 @@ function readVersion(): string {
 }
 
 function die(message: string, code = 2): never {
-  console.error(`VibeSec: ${message}`);
+  console.error(`SecureCycle: ${message}`);
   process.exit(code);
 }
 
@@ -184,7 +184,7 @@ async function expandTargetToFiles(
 }
 
 function printText(result: ScanResult): void {
-  console.log(`VibeSec ${readVersion()} scan`);
+  console.log(`SecureCycle ${readVersion()} scan`);
   console.log(`Workspace: ${result.workspaceRoot}`);
   console.log(`Target:    ${result.target}`);
   console.log(`Files:     ${result.scannedFiles}`);
@@ -272,7 +272,7 @@ async function main(): Promise<void> {
     if (parsed.format === "json") {
       console.log(JSON.stringify({ ok: false, error: message }, null, 2));
     } else {
-      console.error(`VibeSec scan failed: ${message}`);
+      console.error(`SecureCycle scan failed: ${message}`);
     }
     process.exit(2);
   }

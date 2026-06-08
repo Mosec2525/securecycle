@@ -1,35 +1,37 @@
-# VibeSec
+# SecureCycle
 
-[![CI](https://github.com/Mosec2525/vibe-coding-security/actions/workflows/ci.yml/badge.svg)](https://github.com/Mosec2525/vibe-coding-security/actions/workflows/ci.yml)
+[![CI](https://github.com/Mosec2525/securecycle/actions/workflows/ci.yml/badge.svg)](https://github.com/Mosec2525/securecycle/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-VibeSec is a local-first VS Code extension that scans source code for security issues with Semgrep and turns findings into AI-ready fix prompts. It is built for developers who want fast feedback without sending project code to a remote scanner.
+Main idea: Security across every phase of the software development lifecycle.
 
-Repository: <https://github.com/Mosec2525/vibe-coding-security>
+SecureCycle is a local-first VS Code extension that scans source code for security issues with Semgrep, supports policy-driven review, tracks taint-analysis findings, and turns results into AI-ready fix prompts.
+
+Repository: <https://github.com/Mosec2525/securecycle>
 
 ## Run With Docker
 
-Anyone can run VibeSec from Docker Hub without installing Semgrep manually. Docker downloads the image and runs VibeSec with the tool, Semgrep, and the bundled rules already included.
+Anyone can run SecureCycle from a container without installing Semgrep manually. The image runs SecureCycle with the tool, Semgrep, and the bundled rules already included.
 
 ```bash
-docker run --rm -v "$PWD:/workspace" mosec2525/vibesec:latest
+docker run --rm -v "$PWD:/workspace" ghcr.io/mosec2525/securecycle:latest
 ```
 
 PowerShell:
 
 ```powershell
-docker run --rm -v "${PWD}:/workspace" mosec2525/vibesec:latest
+docker run --rm -v "${PWD}:/workspace" ghcr.io/mosec2525/securecycle:latest
 ```
 
-Docker Hub: <https://hub.docker.com/r/mosec2525/vibesec>
+Legacy Docker Hub image: <https://hub.docker.com/r/mosec2525/vibesec>
 
-![VibeSec Docker scanner command and output](docs/docker-screenshots/vibesec-docker-scan-output.png)
+![SecureCycle Docker scanner command and output](docs/docker-screenshots/vibesec-docker-scan-output.png)
 
 ## What It Does
 
-1. Run `VibeSec: Scan Current File`, `VibeSec: Scan Whole Project`, or right-click files/folders and run `VibeSec: Scan Selected`.
-2. VibeSec runs Semgrep locally against bundled or workspace-selected policies.
-3. Findings appear in the VibeSec Analysis sidebar with inline diagnostics in the editor.
+1. Run `SecureCycle: Scan Current File`, `SecureCycle: Scan Whole Project`, or right-click files/folders and run `SecureCycle: Scan Selected`.
+2. SecureCycle runs Semgrep locally against bundled or workspace-selected policies.
+3. Findings appear in the SecureCycle Analysis sidebar with inline diagnostics in the editor.
 4. The Control Center opens dashboards, settings, logs, and rule inventory from one place.
 5. Optional AI prompt generation creates copy-paste repair prompts per finding, file, or project.
 
@@ -39,15 +41,15 @@ No scanner account, no telemetry, and no cloud backend are required. API keys fo
 
 ### Control Center Dashboard
 
-![VibeSec Control Center dashboard](docs/real-screenshots/11_control_center_dashboard.png)
+![SecureCycle Control Center dashboard](docs/real-screenshots/11_control_center_dashboard.png)
 
 ### Analysis Panel and Fix Prompts
 
-![VibeSec analysis panel full fix tab](docs/real-screenshots/16_analysis_full_fix_tab.png)
+![SecureCycle analysis panel full fix tab](docs/real-screenshots/16_analysis_full_fix_tab.png)
 
 ### Command Palette
 
-![VibeSec command palette](docs/real-screenshots/15_command_palette_vibesec.png)
+![SecureCycle command palette](docs/real-screenshots/15_command_palette_vibesec.png)
 
 ## Features
 
@@ -80,22 +82,22 @@ semgrep --version
 Use the Docker scanner when you want zero host setup for Semgrep. This is the easiest install path for most users:
 
 ```bash
-docker run --rm -v "$PWD:/workspace" mosec2525/vibesec:latest
+docker run --rm -v "$PWD:/workspace" ghcr.io/mosec2525/securecycle:latest
 ```
 
-Docker Hub: <https://hub.docker.com/r/mosec2525/vibesec>
+Legacy Docker Hub image: <https://hub.docker.com/r/mosec2525/vibesec>
 
 PowerShell:
 
 ```powershell
-docker run --rm -v "${PWD}:/workspace" mosec2525/vibesec:latest
+docker run --rm -v "${PWD}:/workspace" ghcr.io/mosec2525/securecycle:latest
 ```
 
 The image scans `/workspace` by default, uses `.vibesec.yaml` when present, and exits `1` when findings are detected. For local image development:
 
 ```bash
 npm run docker:build
-docker run --rm -v "$PWD:/workspace" vibesec:local
+docker run --rm -v "$PWD:/workspace" securecycle:local
 ```
 
 See [docs/docker.md](docs/docker.md) for JSON output, exit codes, and publishing notes.
@@ -103,32 +105,32 @@ See [docs/docker.md](docs/docker.md) for JSON output, exit codes, and publishing
 ## Installation for Development
 
 ```bash
-git clone https://github.com/Mosec2525/vibe-coding-security.git
-cd vibe-coding-security
+git clone https://github.com/Mosec2525/securecycle.git
+cd securecycle
 npm ci
 npm run compile
 ```
 
-Open the repository in VS Code and press `F5` to launch an Extension Development Host. In the new window, open a source file and run `VibeSec: Scan Current File`.
+Open the repository in VS Code and press `F5` to launch an Extension Development Host. In the new window, open a source file and run `SecureCycle: Scan Current File`.
 
 ## Commands
 
 | Command | Description |
 | --- | --- |
-| `VibeSec: Scan Current File` | Scan the active editor file |
-| `VibeSec: Scan Selected` | Scan files or folders selected from Explorer |
-| `VibeSec: Scan Whole Project` | Scan every supported file in the workspace |
-| `VibeSec: Open Control Center` | Open Dashboard, Settings, Logs, and Rules |
-| `VibeSec: Open Policy File` | Create or open `.vibesec.yaml` in the workspace root |
-| `VibeSec: Reload Policy` | Reload policy configuration from disk |
-| `VibeSec: Set API Key` | Store an AI provider key securely |
-| `VibeSec: Clear API Key` | Remove the stored key |
-| `VibeSec: Test API Key` | Validate the configured provider, endpoint, model, and key |
-| `VibeSec: Generate Prompts` | Generate AI repair prompts for current findings |
+| `SecureCycle: Scan Current File` | Scan the active editor file |
+| `SecureCycle: Scan Selected` | Scan files or folders selected from Explorer |
+| `SecureCycle: Scan Whole Project` | Scan every supported file in the workspace |
+| `SecureCycle: Open Control Center` | Open Dashboard, Settings, Logs, and Rules |
+| `SecureCycle: Open Policy File` | Create or open `.vibesec.yaml` in the workspace root |
+| `SecureCycle: Reload Policy` | Reload policy configuration from disk |
+| `SecureCycle: Set API Key` | Store an AI provider key securely |
+| `SecureCycle: Clear API Key` | Remove the stored key |
+| `SecureCycle: Test API Key` | Validate the configured provider, endpoint, model, and key |
+| `SecureCycle: Generate Prompts` | Generate AI repair prompts for current findings |
 
 ## Policy File
 
-Create `.vibesec.yaml` in the workspace root. VibeSec supports two policy styles:
+Create `.vibesec.yaml` in the workspace root. SecureCycle supports two policy styles:
 
 ### Selector policy
 
@@ -171,11 +173,11 @@ rules:
     pattern: eval(...)
 ```
 
-Use `VibeSec: Open Policy File` to create a starter policy and `VibeSec: Reload Policy` after editing it.
+Use `SecureCycle: Open Policy File` to create a starter policy and `SecureCycle: Reload Policy` after editing it.
 
 ## AI Fix Prompts
 
-VibeSec can build repair prompts for Cursor, Claude Code, ChatGPT, or another coding assistant. The generated prompts include exact file paths, line numbers, rule IDs, severity labels, snippets, taint flow when available, and verification expectations.
+SecureCycle can build repair prompts for Cursor, Claude Code, ChatGPT, or another coding assistant. The generated prompts include exact file paths, line numbers, rule IDs, severity labels, snippets, taint flow when available, and verification expectations.
 
 Supported providers:
 
@@ -187,10 +189,10 @@ Supported providers:
 
 One-time setup:
 
-1. Run `VibeSec: Set API Key`.
+1. Run `SecureCycle: Set API Key`.
 2. Pick the provider and store the key in VS Code SecretStorage.
 3. Configure `vibesec.llmProvider`, `vibesec.llmModel`, and optional custom endpoint settings from the Control Center or VS Code settings.
-4. Run `VibeSec: Generate Prompts`, then copy per-finding, per-file, or project-level prompts from the Analysis panel.
+4. Run `SecureCycle: Generate Prompts`, then copy per-finding, per-file, or project-level prompts from the Analysis panel.
 
 ## Development Scripts
 
@@ -201,7 +203,7 @@ One-time setup:
 | `npm run audit` | Run `npm audit --audit-level=moderate` |
 | `npm run package:ls` | Compile and list files that will be included in the VSIX |
 | `npm run package:vsix` | Compile and create a local `.vsix` package |
-| `npm run docker:build` | Build the local zero-dependency scanner image as `vibesec:local` |
+| `npm run docker:build` | Build the local zero-dependency scanner image as `securecycle:local` |
 | `npm run release:dry-run` | Run tests, audit, and VSIX file audit |
 | `npm run release:vsix` | Run tests, audit, and create a VSIX |
 
@@ -221,7 +223,7 @@ See [docs/release-checklist.md](docs/release-checklist.md) for the release check
 ## Project Structure
 
 ```text
-vibe-coding-security/
+securecycle/
 |-- src/                     Extension activation, scanner, policy, logs, panel, Control Center
 |-- design/                  React source for Analysis panel and Control Center
 |-- media/                   Activity-bar icon, walkthrough Markdown, built design bundles
@@ -235,6 +237,3 @@ vibe-coding-security/
 |-- package-lock.json        Locked npm dependency graph
 |-- README.md                User and contributor documentation
 ```
-
-
-

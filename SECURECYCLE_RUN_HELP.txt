@@ -1,11 +1,11 @@
-How to run VibeSec v1.0.0
+How to run SecureCycle v1.0.0
 
 1. Open this extracted folder in VS Code.
 2. Run:
    npm install
    npm run compile
 3. Press F5.
-4. In the Extension Development Host, click the VibeSec icon.
+4. In the Extension Development Host, click the SecureCycle icon.
 
 API key setup:
 - Open Control Center → Settings.

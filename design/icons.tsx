@@ -1,4 +1,4 @@
-// VibeSec icons. 14x14 default, currentColor stroke.
+// SecureCycle icons. 14x14 default, currentColor stroke.
 // Faithful TypeScript port of design's icons.jsx.
 
 import * as React from "react";

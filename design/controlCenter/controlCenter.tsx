@@ -125,7 +125,7 @@ const Sidebar: React.FC<SidebarProps> = ({ page, setPage, version }) => (
         </svg>
       </div>
       <div>
-        <div className="brand-name">VibeSec</div>
+        <div className="brand-name">SecureCycle</div>
         <div className="brand-tag">control center</div>
       </div>
     </div>

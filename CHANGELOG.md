@@ -1,13 +1,13 @@
 # Changelog
 
-All notable changes to VibeSec are documented here.
+All notable changes to SecureCycle are documented here.
 
 ---
 
 ## [1.0.0] - 2026-05-29
 
 ### Overview
-VibeSec 1.0.0 is the repository-hardening release: documentation now matches the current GitHub repository and extension UI, Marketplace-facing metadata is present in the extension manifest, tests run in CI, and release packaging has an auditable VSIX path.
+SecureCycle 1.0.0 is the repository-hardening release: documentation now matches the current GitHub repository and extension UI, Marketplace-facing metadata is present in the extension manifest, tests run in CI, and release packaging has an auditable VSIX path.
 
 ### Added
 - Marketplace metadata in `package.json`: publisher, license, repository, homepage, bugs URL, categories, keywords, gallery banner, and CI badge.
@@ -20,7 +20,7 @@ VibeSec 1.0.0 is the repository-hardening release: documentation now matches the
 - `docs/release-checklist.md` with the repeatable release process for version bumps, test validation, package audits, and release tagging.
 
 ### Changed
-- README updated to use the canonical clone URL `https://github.com/Mosec2525/vibe-coding-security.git`.
+- README updated to use the canonical clone URL `https://github.com/Mosec2525/securecycle.git`.
 - README commands and screenshots now describe the current Analysis panel and Control Center instead of older Scan/Findings panel wording.
 - Package version aligned to `1.0.0`.
 - `.vscodeignore` tightened for release packaging while preserving production dependencies required by the compiled extension.
@@ -88,7 +88,7 @@ VibeSec 1.0.0 is the repository-hardening release: documentation now matches the
 ### Changed
 - Custom / Other API keys are stored separately in VS Code SecretStorage.
 - Custom / Other requires an exact model name instead of accidentally reusing a built-in provider model.
-- Custom endpoints accept either a full `/chat/completions` URL or a base `/v1` URL that VibeSec completes automatically.
+- Custom endpoints accept either a full `/chat/completions` URL or a base `/v1` URL that SecureCycle completes automatically.
 - Added OpenRouter-friendly headers and improved OpenAI-compatible response parsing.
 
 ---
@@ -152,7 +152,7 @@ Sprint 7 adds **taint analysis** — tracking how untrusted data flows from a *s
 ## [0.6.4] — Sprint 6 "Control Center"
 
 ### Overview
-Sprint 6 adds a second webview — the **VibeSec Control Center** — that opens as a full editor-area tab next to the existing Analysis sidebar. It surfaces four pages (Dashboard / Settings / Logs / Rules) sourced live from the extension's own state, makes every `vibesec.*` setting two-way bindable from a real UI, persists scan history per-workspace, and ships a structured logging pipeline with disk persistence so users can inspect what happened during prior sessions. Visual direction is from the Claude Design output at `Extension Design/VibeSec Extension Webview/` (CDN React/Babel and Google Fonts stripped, all assets bundled locally to satisfy CSP). The existing Analysis sidebar is untouched.
+Sprint 6 adds a second webview — the **SecureCycle Control Center** — that opens as a full editor-area tab next to the existing Analysis sidebar. It surfaces four pages (Dashboard / Settings / Logs / Rules) sourced live from the extension's own state, makes every `vibesec.*` setting two-way bindable from a real UI, persists scan history per-workspace, and ships a structured logging pipeline with disk persistence so users can inspect what happened during prior sessions. Visual direction is from the Claude Design output at `Extension Design/SecureCycle Extension Webview/` (CDN React/Babel and Google Fonts stripped, all assets bundled locally to satisfy CSP). The existing Analysis sidebar is untouched.
 
 ---
 
@@ -187,7 +187,7 @@ Sprint 6 adds a second webview — the **VibeSec Control Center** — that opens
 #### Logs page + persistent log pipeline (Phase 3)
 - New `src/logBus.ts` — process-wide singleton with `info / warn / error(type, msg, detail?)`, a 1000-event ring buffer, and a `subscribe()` API. Safe to import before activation.
 - New `src/logStore.ts` — JSON Lines persistence under `<globalStorageUri>/logs/vibesec.log`, with rotation to `vibesec.log.1` at ~2 MB. On activation, the store tail-loads up to 1000 events back into the bus's ring buffer so the Logs page shows prior-session events immediately.
-- Tee to `vscode.OutputChannel("VibeSec")` so users can read raw events from VS Code's standard Output panel.
+- Tee to `vscode.OutputChannel("SecureCycle")` so users can read raw events from VS Code's standard Output panel.
 - Instrumentation (no behavior change):
   - `src/scanner.ts` — fatal Semgrep exits log `semgrep error` with stderr; non-fatal stderr surfaces as `semgrep warn`.
   - `src/policy.ts` — load success / read failure / YAML parse error / partial-failure all log `policy` events.
@@ -229,7 +229,7 @@ Sprint 6 adds a second webview — the **VibeSec Control Center** — that opens
 ## [0.5.0] — Sprint 5 "Panel"
 
 ### Overview
-Sprint 5 replaces VibeSec's two native TreeView panels with a single React-based analysis webview that lives in the activity-bar sidebar. The new panel is a faithful port of the design mockup at `Extension Design/VibeSec extension/vibesec-panel/` — file picker with checkboxes, severity-filtered finding cards with metadata grid (Category / Confidence / CWE / OWASP), expandable details, and a Full Fix tab that surfaces ready-to-paste AI prompts grouped per file. Severity is now aligned 1:1 with the YAML policy schema (`error` / `warning` / `info`), and findings carry colored callout-style left borders so errors and warnings are visible at a glance. Under the hood, Semgrep rule metadata is now forwarded losslessly into every `Finding`, which is what powers the panel's metadata grid.
+Sprint 5 replaces SecureCycle's two native TreeView panels with a single React-based analysis webview that lives in the activity-bar sidebar. The new panel is a faithful port of the design mockup at `Extension Design/SecureCycle extension/vibesec-panel/` — file picker with checkboxes, severity-filtered finding cards with metadata grid (Category / Confidence / CWE / OWASP), expandable details, and a Full Fix tab that surfaces ready-to-paste AI prompts grouped per file. Severity is now aligned 1:1 with the YAML policy schema (`error` / `warning` / `info`), and findings carry colored callout-style left borders so errors and warnings are visible at a glance. Under the hood, Semgrep rule metadata is now forwarded losslessly into every `Finding`, which is what powers the panel's metadata grid.
 
 ---
 
@@ -301,7 +301,7 @@ Sprint 5 replaces VibeSec's two native TreeView panels with a single React-based
 - `contributes.viewsWelcome` cleared (the React panel handles all empty / error / no-findings states internally)
 - `contributes.menus`:
   - All `view/title` and `view/item/*` entries scoped to the removed TreeViews dropped
-  - New `explorer/context` "Scan with VibeSec" entry on `vibesec.scanSelected`
+  - New `explorer/context` "Scan with SecureCycle" entry on `vibesec.scanSelected`
   - New `editor/title` "Scan Current File" entry on `vibesec.scanCurrentFile`
 - Version bumped to `0.5.0`
 
@@ -344,9 +344,9 @@ Sprint 4 unlocks two major capabilities: **multi-target scanning** (scan multipl
 
 #### Secure API Key Management
 - New `src/secrets.ts` — wrapper around VS Code `SecretStorage`; keys stored under `vibesec.apiKey.openai`, `vibesec.apiKey.anthropic`, `vibesec.apiKey.gemini`
-- `VibeSec: Set API Key` — picks provider from a quick-pick, prompts for key with `showInputBox({ password: true })` so the key is masked while typing
-- `VibeSec: Clear API Key` — removes the stored key for a chosen provider
-- `VibeSec: Test API Key` — sends a ping to verify the key works; shows a success or error notification
+- `SecureCycle: Set API Key` — picks provider from a quick-pick, prompts for key with `showInputBox({ password: true })` so the key is masked while typing
+- `SecureCycle: Clear API Key` — removes the stored key for a chosen provider
+- `SecureCycle: Test API Key` — sends a ping to verify the key works; shows a success or error notification
 
 #### Prompt UI — Generate and Copy Prompts
 - **Generate Prompts** (`$(sparkle)`) — title-bar button on the Findings panel; pre-generates prompts for all findings in batch according to the active `promptMode`; shows progress and supports cancellation
@@ -357,7 +357,7 @@ Sprint 4 unlocks two major capabilities: **multi-target scanning** (scan multipl
 - Generated prompts are **cached in memory** on `FindingsProvider` and reused on subsequent clicks; cache is cleared whenever a new scan runs
 
 #### New Settings
-Three new entries in **Settings → VibeSec**:
+Three new entries in **Settings → SecureCycle**:
 
 | Setting | Type | Default | Description |
 |---|---|---|---|
@@ -370,7 +370,7 @@ Three new entries in **Settings → VibeSec**:
 - `vibesec.llmProvider` auto-suggests the cheapest default model when changed: `gpt-5-nano` (OpenAI), `claude-haiku-4-5` (Anthropic), `gemini-2.5-flash-lite` (Gemini)
 
 #### Onboarding Walkthrough — Step 4
-- New walkthrough step "Hook up an AI provider for fix prompts" added to the existing first-install walkthrough; guides users to `VibeSec: Set API Key`; completes automatically once the command is run
+- New walkthrough step "Hook up an AI provider for fix prompts" added to the existing first-install walkthrough; guides users to `SecureCycle: Set API Key`; completes automatically once the command is run
 
 ---
 
@@ -421,14 +421,14 @@ Three new entries in **Settings → VibeSec**:
 ## [0.3.0] — Sprint 3 "Interface"
 
 ### Overview
-Full UI/UX sprint. VibeSec gets its own activity bar icon, a **Scan panel** (multi-select file tree for choosing what to scan), a redesigned Findings panel with **folder grouping** (Folder → File → Finding → Detail) and severity-first visual hierarchy, a full accessibility pass, three user-configurable settings, auto-scan-on-save, a first-install walkthrough, and a Copy Description action. A UI style guide is included to keep future sprints consistent.
+Full UI/UX sprint. SecureCycle gets its own activity bar icon, a **Scan panel** (multi-select file tree for choosing what to scan), a redesigned Findings panel with **folder grouping** (Folder → File → Finding → Detail) and severity-first visual hierarchy, a full accessibility pass, three user-configurable settings, auto-scan-on-save, a first-install walkthrough, and a Copy Description action. A UI style guide is included to keep future sprints consistent.
 
 ---
 
 ### Added
 
 #### Activity Bar Icon
-- VibeSec now has its own dedicated icon in the VS Code activity bar — a shield with a lightning bolt — separate from the Explorer sidebar
+- SecureCycle now has its own dedicated icon in the VS Code activity bar — a shield with a lightning bolt — separate from the Explorer sidebar
 - New `media/vibesec-icon.svg` — single-path SVG with `fill="currentColor"` and `fill-rule="evenodd"` so VS Code can mask it correctly in dark, light, and high-contrast themes
 - New `viewsContainers.activitybar` entry in `package.json` with id `vibesec`
 - The Findings panel (`vibesec.findingsPanel`) is now hosted inside this dedicated container instead of the Explorer
@@ -438,7 +438,7 @@ Full UI/UX sprint. VibeSec gets its own activity bar icon, a **Scan panel** (mul
 - Wired via `contributes.menus["view/title"]` scoped to `view == vibesec.findingsPanel`
 
 #### Scan Panel — Multi-Select File Tree
-- New `vibesec.scanPanel` view in the VibeSec activity bar container, alongside Findings
+- New `vibesec.scanPanel` view in the SecureCycle activity bar container, alongside Findings
 - New `src/scanProvider.ts` — TreeDataProvider listing the workspace as a collapsible file tree with theme-aware icons
 - Native `canSelectMany: true` — click to select, Ctrl/Cmd+click to add, Shift+click for range
 - Auto-filters noise directories (node_modules, .git, dist, build, etc.) and identifies 25+ scannable file extensions
@@ -454,7 +454,7 @@ Full UI/UX sprint. VibeSec gets its own activity bar icon, a **Scan panel** (mul
 - All three non-findings states are now rendered via `contributes.viewsWelcome` in `package.json` with clickable action buttons, replacing the plain text `treeView.message` strings from Sprint 2
 - **`empty`** (no scan yet): "No scan has run yet." with `[$(play) Scan Current File]` and `[$(gear) Open Policy File]` buttons
 - **`noFindings`** (clean scan): `$(pass-filled)` icon + "No security issues found. Your last scan came back clean."
-- **`error`** (scan failed): `$(error)` icon + "Scan encountered an error." + `[$(settings-gear) Open VibeSec Settings]` deep-link
+- **`error`** (scan failed): `$(error)` icon + "Scan encountered an error." + `[$(settings-gear) Open SecureCycle Settings]` deep-link
 - State is driven by the `vibesec.panelState` context key, set via `vscode.commands.executeCommand("setContext", ...)` in `extension.ts` on every state transition
 
 #### Redesigned Findings Tree — Compact Primary Row
@@ -501,7 +501,7 @@ Full UI/UX sprint. VibeSec gets its own activity bar icon, a **Scan panel** (mul
   - Description child: `"Description: Command injection via subprocess.run(shell=True)..."`
 
 #### Settings (`contributes.configuration`)
-Three new user-configurable settings, accessible from **Settings → VibeSec**:
+Three new user-configurable settings, accessible from **Settings → SecureCycle**:
 
 | Setting | Type | Default | Description |
 |---|---|---|---|
@@ -551,7 +551,7 @@ Three new user-configurable settings, accessible from **Settings → VibeSec**:
 
 #### `package.json`
 - Version bumped `0.2.0` → `0.3.0`
-- All commands now have `"category": "VibeSec"` — they group cleanly in the command palette
+- All commands now have `"category": "SecureCycle"` — they group cleanly in the command palette
 - Added `vibesec.scanPanel` view, `scanSelected`, `refreshScanTree`, `copyDescription` commands
 - `views` container changed from `"explorer"` to `"vibesec"` activity bar with dedicated icon
 - Added `viewsWelcome` entries, `commandPalette` hiding for internal commands, color contributions, configuration settings, walkthrough
@@ -588,7 +588,7 @@ Three new user-configurable settings, accessible from **Settings → VibeSec**:
 ## [0.2.0] — Sprint 2 "Policy"
 
 ### Overview
-Adds a full policy configuration system, a dedicated Findings side panel, and a bundled ruleset — turning VibeSec from a basic scanner into a configurable, team-ready security tool.
+Adds a full policy configuration system, a dedicated Findings side panel, and a bundled ruleset — turning SecureCycle from a basic scanner into a configurable, team-ready security tool.
 
 ---
 
@@ -603,8 +603,8 @@ Adds a full policy configuration system, a dedicated Findings side panel, and a 
 - Supports **file exclusion patterns** (glob-based, e.g. `**/node_modules/**`, `**/*.test.ts`)
 - Policy is **cached per workspace** — no re-parsing on every scan
 - Always returns a usable config even if the file is missing or invalid (graceful degradation with error messages)
-- New command: `VibeSec: Reload Policy` — force-reloads `.vibesec.yaml` from disk
-- New command: `VibeSec: Open Policy File` — creates or opens `.vibesec.yaml` with a starter template
+- New command: `SecureCycle: Reload Policy` — force-reloads `.vibesec.yaml` from disk
+- New command: `SecureCycle: Open Policy File` — creates or opens `.vibesec.yaml` with a starter template
 
 #### Findings Panel (TreeView)
 - New `findingsProvider.ts` module — implements a VS Code side panel under the Explorer
@@ -614,7 +614,7 @@ Adds a full policy configuration system, a dedicated Findings side panel, and a 
 - **Hover a finding** for a rich markdown tooltip (rule ID, full message, code snippet)
 - Panel badge shows total finding count
 - Contextual empty-state messages guide the user when no scan has run or no issues were found
-- New command: `VibeSec: Go to Finding` (used internally by tree-click navigation)
+- New command: `SecureCycle: Go to Finding` (used internally by tree-click navigation)
 
 #### Bundled Default Ruleset (`rules/default.yaml`)
 - ~30 rules included out of the box — no internet connection required

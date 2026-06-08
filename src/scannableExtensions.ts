@@ -6,7 +6,7 @@ import {
 
 // ── Scannable file extensions ────────────────────────────────────────────────
 //
-// Source of truth for "which files can VibeSec scan". Two consumers:
+// Source of truth for "which files can SecureCycle scan". Two consumers:
 //   1. The Scan panel (scanProvider.ts) — used to mark non-scannable files
 //      with the "not scannable" badge.
 //   2. The multi-target scan walker (extension.ts) — used to skip files

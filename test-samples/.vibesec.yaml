@@ -1,4 +1,4 @@
-# .vibesec.yaml — edited by VibeSec Control Center
+# .vibesec.yaml — edited by SecureCycle Control Center
 presets:
   - vibesec:default
   - vibesec:taint

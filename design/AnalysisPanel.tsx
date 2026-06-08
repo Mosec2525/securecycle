@@ -207,7 +207,7 @@ export const AnalysisPanel: React.FC<Props> = ({
     <div className="vs-panel" style={{ position: "relative" }}>
       <div className="vs-side">
         <div className="vs-side-header">
-          <span>VibeSec — Analysis</span>
+          <span>SecureCycle — Analysis</span>
           <div className="vs-actions">
             <button
               className="vs-btn-icon"
@@ -560,7 +560,7 @@ export const AnalysisPanel: React.FC<Props> = ({
                   <div className="vs-empty-text">
                     <strong>Ready when you are</strong>
                     <p>
-                      Pick files or a folder above, then run Analyze. VibeSec scans
+                      Pick files or a folder above, then run Analyze. SecureCycle scans
                       using your <code>.vibesec.yaml</code> policy and bundled
                       OWASP-style rules.
                     </p>
@@ -625,7 +625,7 @@ export const AnalysisPanel: React.FC<Props> = ({
             findings <span style={{ color: "var(--text)" }}>{findings.length}</span>
           </span>
           <span className="vs-spacer" />
-          {version && <span className="vs-status-item">VibeSec {version}</span>}
+          {version && <span className="vs-status-item">SecureCycle {version}</span>}
         </div>
 
         {toast && (

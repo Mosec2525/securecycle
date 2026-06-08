@@ -130,7 +130,7 @@ function friendlyError(provider: LlmProvider, status: number, body: string): Llm
   const label = PROVIDER_LABEL[provider];
   if (status === 401 || status === 403) {
     return new LlmClientError(
-      `${label}: API key was rejected (HTTP ${status}). Run "VibeSec: Set API Key" to update it.`,
+      `${label}: API key was rejected (HTTP ${status}). Run "SecureCycle: Set API Key" to update it.`,
       provider, status,
     );
   }
@@ -333,7 +333,7 @@ async function callGemini(opts: LlmCallOptions): Promise<string> {
 
 async function callGroq(opts: LlmCallOptions): Promise<string> {
   // Groq uses an OpenAI-compatible chat-completions API. Users only need to
-  // paste a Groq API key that starts with gsk_; VibeSec supplies the endpoint.
+  // paste a Groq API key that starts with gsk_; SecureCycle supplies the endpoint.
   return callOpenAICompatible("groq", {
     ...opts,
     baseUrl: opts.baseUrl || "https://api.groq.com/openai/v1/chat/completions",
@@ -370,13 +370,13 @@ async function callOpenAICompatible(
   const url = normalizeCustomChatCompletionsUrl(opts.baseUrl || "");
   if (!url) {
     throw new LlmClientError(
-      `${PROVIDER_LABEL[provider]}: missing API endpoint. Add an OpenAI-compatible endpoint in VibeSec Settings, for example https://openrouter.ai/api/v1/chat/completions or https://api.groq.com/openai/v1/chat/completions.`,
+      `${PROVIDER_LABEL[provider]}: missing API endpoint. Add an OpenAI-compatible endpoint in SecureCycle Settings, for example https://openrouter.ai/api/v1/chat/completions or https://api.groq.com/openai/v1/chat/completions.`,
       provider,
     );
   }
   if (!model.trim() || model.trim() === "custom-model") {
     throw new LlmClientError(
-      `${PROVIDER_LABEL[provider]}: missing model name. Write the exact model id in VibeSec Settings before testing or generating prompts.`,
+      `${PROVIDER_LABEL[provider]}: missing model name. Write the exact model id in SecureCycle Settings before testing or generating prompts.`,
       provider,
     );
   }
@@ -397,7 +397,7 @@ async function callOpenAICompatible(
         // OpenRouter accepts these optional headers; other OpenAI-compatible
         // providers normally ignore unknown headers.
         "HTTP-Referer":  "https://vibesec.local",
-        "X-Title":       "VibeSec",
+        "X-Title":       "SecureCycle",
       },
       body: JSON.stringify(body),
     }, REQUEST_TIMEOUT_MS, signal);

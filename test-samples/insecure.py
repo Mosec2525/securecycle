@@ -1,4 +1,4 @@
-# insecure.py - intentionally vulnerable Python file for testing VibeSec
+# insecure.py - intentionally vulnerable Python file for testing SecureCycle
 # DO NOT use any of this code in production.
 
 import subprocess

@@ -169,7 +169,7 @@ function appendUniversalSecurityQualityBar(lines: string[]): void {
   lines.push("");
   lines.push("Universal guardrails:");
   lines.push("  - Preserve legitimate behavior; reject or safely handle malicious input; fail closed.");
-  lines.push("  - Use exact VibeSec severity labels from the report: error, warning, info. Do not translate them to High/Medium/Low.");
+  lines.push("  - Use exact SecureCycle severity labels from the report: error, warning, info. Do not translate them to High/Medium/Low.");
   lines.push("  - Identify trust boundary, untrusted input, sensitive sink, and validation/sanitization/encoding.");
   lines.push("  - Rule messages are evidence, not patch instructions; choose safer native APIs when available.");
   lines.push("  - Do not invent files, APIs, line numbers, dependencies, or runnable-looking code unsupported by context.");

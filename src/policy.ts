@@ -355,7 +355,7 @@ function rawStringArray(raw: Record<string, unknown>, key: string): string[] {
   return Array.isArray(value) ? value.filter((v): v is string => typeof v === "string") : [];
 }
 
-function looksLikeVibeSecPolicy(raw: Record<string, unknown>): boolean {
+function looksLikeSecureCyclePolicy(raw: Record<string, unknown>): boolean {
   return ["presets", "severity", "disabledRules", "externalRuleFiles", "files", "activePolicyKind", "activePolicyFiles", "activeNormalPolicyFile", "activeTaintPolicyFile"].some((k) => k in raw);
 }
 
@@ -397,8 +397,8 @@ function rawPolicyFromSelectorEntry(entry: SelectorPolicyEntry, workspaceRoot: s
       return null;
     }
     // A raw Semgrep rule file has only top-level rules:. Treat it as a policy
-    // that contributes custom rules. A full VibeSec policy is preserved.
-    if (Array.isArray(loaded.rules) && !looksLikeVibeSecPolicy(loaded)) {
+    // that contributes custom rules. A full SecureCycle policy is preserved.
+    if (Array.isArray(loaded.rules) && !looksLikeSecureCyclePolicy(loaded)) {
       return { presets: [], rules: loaded.rules };
     }
     return loaded;
@@ -553,7 +553,7 @@ export function loadPolicy(workspaceRoot: string, extensionRoot?: string): Polic
   }
 
   // .vibesec.yaml may act as a selector for any number of active policy
-  // files. VibeSec supports mixing multiple normal and taint policies together.
+  // files. SecureCycle supports mixing multiple normal and taint policies together.
   // An empty activePolicyFiles array is intentional and means "scan with no
   // policies" instead of silently falling back to bundled defaults.
   if (isRecord(raw)) {

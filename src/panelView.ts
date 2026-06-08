@@ -16,7 +16,7 @@ import {
 } from "./panelMessages";
 import type { PanelState } from "./findingsProvider";
 
-// PanelController — the WebviewViewProvider that fills the VibeSec activity-bar
+// PanelController — the WebviewViewProvider that fills the SecureCycle activity-bar
 // slot. Single source of truth for rendering the React analysis UI inside the
 // sidebar.
 //
@@ -211,7 +211,7 @@ export class PanelController
           this.postMessage({
             type: "toast",
             tone: "error",
-            message: `VibeSec: Could not open ${msg.absPath}: ${detail}`,
+            message: `SecureCycle: Could not open ${msg.absPath}: ${detail}`,
           });
         }
         break;
@@ -252,7 +252,7 @@ export class PanelController
       return;
     }
     const rel = await vscode.window.showInputBox({
-      title: "VibeSec — New file",
+      title: "SecureCycle — New file",
       prompt: "Enter a workspace-relative file path, for example src/example.js",
       placeHolder: "src/example.js",
       ignoreFocusOut: true,
@@ -276,30 +276,30 @@ export class PanelController
 
   private async pickAndOpenFolder(): Promise<void> {
     const picks = await vscode.window.showOpenDialog({
-      title: "VibeSec — Open folder inside Analysis panel",
+      title: "SecureCycle — Open folder inside Analysis panel",
       canSelectFiles: false,
       canSelectFolders: true,
       canSelectMany: false,
-      openLabel: "Open in VibeSec",
+      openLabel: "Open in SecureCycle",
     });
     const picked = picks?.[0];
     if (!picked) { return; }
 
     try {
-      // Treat the selected folder as the active VibeSec workspace inside the tool.
+      // Treat the selected folder as the active SecureCycle workspace inside the tool.
       // This does not open a new VS Code window and does not add a normal VS Code workspace folder.
       this.panelWorkspaceFolder = picked.fsPath;
       this.extraFolders.clear();
       this.extraFiles.clear();
       const { tree, defaultSelected } = await this.buildWorkspaceTree();
       this.postMessage({ type: "workspaceTree", tree, defaultSelected });
-      this.postMessage({ type: "toast", tone: "info", message: `VibeSec workspace opened: ${path.basename(picked.fsPath)}` });
+      this.postMessage({ type: "toast", tone: "info", message: `SecureCycle workspace opened: ${path.basename(picked.fsPath)}` });
     } catch (err: unknown) {
       const detail = err instanceof Error ? err.message : String(err);
       this.postMessage({
         type: "toast",
         tone: "error",
-        message: `VibeSec: Could not open folder: ${detail}`,
+        message: `SecureCycle: Could not open folder: ${detail}`,
       });
     }
   }
@@ -487,7 +487,7 @@ export class PanelController
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="Content-Security-Policy" content="${csp}" />
-  <title>VibeSec</title>
+  <title>SecureCycle</title>
   <link rel="stylesheet" href="${stylesUri}" />
   <style>
     html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }

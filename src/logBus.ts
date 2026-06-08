@@ -1,7 +1,7 @@
 // LogBus — process-wide singleton that captures structured log events from
 // scanner / policy / llmClient / promptGenerator and fans them out to:
 //   • an in-memory ring buffer (1000 events) for fast Control Center replay
-//   • a vscode.OutputChannel ("VibeSec") for raw inspection
+//   • a vscode.OutputChannel ("SecureCycle") for raw inspection
 //   • disk persistence (wired in by logStore.ts at activation time)
 //
 // Designed to be safe to import from any source file *before* extension

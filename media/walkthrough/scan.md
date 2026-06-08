@@ -3,10 +3,10 @@
 ## How it works
 
 1. Open any `.py`, `.js`, or `.ts` file
-2. Run **VibeSec: Scan Current File** from the command palette (`Ctrl+Shift+P`)
+2. Run **SecureCycle: Scan Current File** from the command palette (`Ctrl+Shift+P`)
 3. Findings appear in two places:
    - **Inline squiggles** directly on the vulnerable lines
-   - **VibeSec panel** (shield icon in the left sidebar) — grouped by file, sorted by severity
+   - **SecureCycle panel** (shield icon in the left sidebar) — grouped by file, sorted by severity
 
 ## Try the sample file
 

@@ -15,7 +15,7 @@ import { logBus, LogEvent } from "./logBus";
 //   recent on-disk tail, which is enough for the current use case.
 //
 // The store also tees every event to a vscode.OutputChannel so users can
-// inspect raw logs from the standard Output panel (Help → Toggle Output → "VibeSec").
+// inspect raw logs from the standard Output panel (Help → Toggle Output → "SecureCycle").
 //
 // On extension activation we tail-load the active file into the bus's ring
 // buffer so the first time the user opens the Control Center after a reload
@@ -37,7 +37,7 @@ export class LogStore implements vscode.Disposable {
     this.logFile     = path.join(this.logsDir, "vibesec.log");
     this.rotatedFile = path.join(this.logsDir, "vibesec.log.1");
 
-    this.outputChannel = vscode.window.createOutputChannel("VibeSec");
+    this.outputChannel = vscode.window.createOutputChannel("SecureCycle");
     this.subs.push(this.outputChannel);
 
     this.ensureDir();
@@ -54,7 +54,7 @@ export class LogStore implements vscode.Disposable {
         this.appendToDisk(event);
       } catch (err) {
         this.outputChannel.appendLine(
-          `[VibeSec] log persistence failed: ${err instanceof Error ? err.message : String(err)}`,
+          `[SecureCycle] log persistence failed: ${err instanceof Error ? err.message : String(err)}`,
         );
         // Stop trying after the first failure so we don't spam the channel
         // every single event.

@@ -11,7 +11,7 @@ export interface Finding {
   endCol: number;
   snippet: string;
   // Whatever metadata Semgrep emits for the matched rule. Open by design so
-  // VibeSec rules, Semgrep registry rules (p/owasp-top-ten, p/cwe), and any
+  // SecureCycle rules, Semgrep registry rules (p/owasp-top-ten, p/cwe), and any
   // future rule source can carry their full metadata through to the UI.
   metadata?: Record<string, unknown>;
   // Populated only for taint-mode findings (Sprint 7). Parsed from Semgrep's

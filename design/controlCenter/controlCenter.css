@@ -1,6 +1,6 @@
-/* VibeSec Control Center — design tokens + base.
+/* SecureCycle Control Center — design tokens + base.
  *
- * Ported from Extension Design/VibeSec Extension Webview/styles.css with
+ * Ported from Extension Design/SecureCycle Extension Webview/styles.css with
  * two CSP-required substitutions:
  *   - Google Fonts @import removed (CSP forbids remote stylesheets).
  *   - Geist / Geist Mono swapped for var(--vscode-font-family) /

@@ -47,12 +47,12 @@ import {
 
 // ── Policy template written when openPolicyFile creates a new file ────────────
 
-const POLICY_TEMPLATE = `# .vibesec.yaml — VibeSec policy file
+const POLICY_TEMPLATE = `# .vibesec.yaml — SecureCycle policy file
 # Place this file at your workspace root.
 # All fields are optional. Missing file = defaults (r/generic.secrets).
 
 # Rule presets — these run 100% locally, no internet required
-# "vibesec:default" is the bundled OWASP-style ruleset shipped with VibeSec
+# "vibesec:default" is the bundled OWASP-style ruleset shipped with SecureCycle
 # "vibesec:taint"   is the bundled taint-analysis ruleset (source → sink tracking)
 # You can also use Semgrep registry packs (e.g. p/owasp-top-ten) but those
 # require internet access and may need "semgrep login" first.
@@ -102,7 +102,7 @@ function discoverPolicyFiles(workspaceRoot: string | undefined, extensionRoot: s
     {
       label: "Bundled normal scan policy",
       description: "rules/default.yaml",
-      detail: "Default VibeSec rules shipped with the extension",
+      detail: "Default SecureCycle rules shipped with the extension",
       absPath: path.join(extensionRoot, "rules", "default.yaml"),
     },
     {
@@ -171,7 +171,7 @@ function toDiagnostic(finding: Finding): vscode.Diagnostic {
     `[${finding.ruleId}] ${finding.message}`,
     severityMap[finding.severity]
   );
-  diag.source = "VibeSec";
+  diag.source = "SecureCycle";
   return diag;
 }
 
@@ -276,11 +276,11 @@ function showPolicyErrors(errors: string[], source: "load" | "reload"): void {
 
   if (count === 1 && first.includes("No .vibesec.yaml")) {
     // Most common case: friendly info-level nudge, not a warning
-    vscode.window.showInformationMessage(`VibeSec: ${first}`);
+    vscode.window.showInformationMessage(`SecureCycle: ${first}`);
     return;
   }
 
-  const prefix = source === "reload" ? "VibeSec (reload): " : "VibeSec: ";
+  const prefix = source === "reload" ? "SecureCycle (reload): " : "SecureCycle: ";
   vscode.window.showWarningMessage(
     `${prefix}${count} policy error${count !== 1 ? "s" : ""}: ${first}` +
     (count > 1 ? ` (+${count - 1} more — see Output for details)` : "")
@@ -390,7 +390,7 @@ export function activate(context: vscode.ExtensionContext): void {
   ): Promise<void> {
     const scanStartedAt = Date.now();
     if (targets.length === 0) {
-      vscode.window.showWarningMessage("VibeSec: No files selected to scan.");
+      vscode.window.showWarningMessage("SecureCycle: No files selected to scan.");
       return;
     }
 
@@ -415,7 +415,7 @@ export function activate(context: vscode.ExtensionContext): void {
 
     if (!workspaceRoot) {
       vscode.window.showWarningMessage(
-        "VibeSec: Choose a folder or file in the Analysis panel before scanning.",
+        "SecureCycle: Choose a folder or file in the Analysis panel before scanning.",
       );
       updatePanel({ kind: "error", message: "No scan root is available." });
       return;
@@ -465,7 +465,7 @@ export function activate(context: vscode.ExtensionContext): void {
 
     if (expanded.length === 0) {
       vscode.window.showInformationMessage(
-        "VibeSec: Nothing to scan — selection contained no scannable files (after applying file-extension and policy filters).",
+        "SecureCycle: Nothing to scan — selection contained no scannable files (after applying file-extension and policy filters).",
       );
       return;
     }
@@ -489,7 +489,7 @@ export function activate(context: vscode.ExtensionContext): void {
     await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title:    `VibeSec: Scanning ${expanded.length} file${expanded.length !== 1 ? "s" : ""}…`,
+        title:    `SecureCycle: Scanning ${expanded.length} file${expanded.length !== 1 ? "s" : ""}…`,
         cancellable: true,
       },
       async (progress, token) => {
@@ -551,7 +551,7 @@ export function activate(context: vscode.ExtensionContext): void {
       );
       updatePanel({ kind: "error", message: first.message });
       vscode.window.showErrorMessage(
-        `VibeSec scan failed: ${first.message}` +
+        `SecureCycle scan failed: ${first.message}` +
         (failures.length > 1 ? ` (and ${failures.length - 1} more)` : ""),
       );
       return;
@@ -584,7 +584,7 @@ export function activate(context: vscode.ExtensionContext): void {
       const suffix = failures.length > 0
         ? ` (${failures.length} file${failures.length !== 1 ? "s" : ""} failed to scan — see Output.)`
         : "";
-      vscode.window.showInformationMessage(`VibeSec: No issues found in ${expanded.length} file${expanded.length !== 1 ? "s" : ""}.${suffix}`);
+      vscode.window.showInformationMessage(`SecureCycle: No issues found in ${expanded.length} file${expanded.length !== 1 ? "s" : ""}.${suffix}`);
     } else {
       const fileCount = new Set(aggregated.map((f) => f.filePath)).size;
       logBus.info(
@@ -597,7 +597,7 @@ export function activate(context: vscode.ExtensionContext): void {
         ? ` (${failures.length} file${failures.length !== 1 ? "s" : ""} failed to scan.)`
         : "";
       vscode.window.showWarningMessage(
-        `VibeSec: Found ${aggregated.length} issue${aggregated.length !== 1 ? "s" : ""} across ${fileCount} file${fileCount !== 1 ? "s" : ""}.${suffix}`,
+        `SecureCycle: Found ${aggregated.length} issue${aggregated.length !== 1 ? "s" : ""} across ${fileCount} file${fileCount !== 1 ? "s" : ""}.${suffix}`,
       );
     }
   }
@@ -616,7 +616,7 @@ export function activate(context: vscode.ExtensionContext): void {
     async () => {
       const editor = vscode.window.activeTextEditor;
       if (!editor) {
-        vscode.window.showWarningMessage("VibeSec: No file is open.");
+        vscode.window.showWarningMessage("SecureCycle: No file is open.");
         return;
       }
       await runScanOnFile(editor.document.uri.fsPath);
@@ -639,8 +639,8 @@ export function activate(context: vscode.ExtensionContext): void {
 
       if (targets.length === 0) {
         vscode.window.showWarningMessage(
-          "VibeSec: Right-click a file or folder in the Explorer and pick " +
-          "\"Scan with VibeSec\", or open the Analysis Panel to choose files.",
+          "SecureCycle: Right-click a file or folder in the Explorer and pick " +
+          "\"Scan with SecureCycle\", or open the Analysis Panel to choose files.",
         );
         return;
       }
@@ -659,7 +659,7 @@ export function activate(context: vscode.ExtensionContext): void {
       const folders = vscode.workspace.workspaceFolders;
       if (!folders || folders.length === 0) {
         vscode.window.showWarningMessage(
-          "VibeSec: No workspace folder is open. Open a folder to use VibeSec.",
+          "SecureCycle: No workspace folder is open. Open a folder to use SecureCycle.",
         );
         return;
       }
@@ -676,7 +676,7 @@ export function activate(context: vscode.ExtensionContext): void {
       } catch (err: unknown) {
         const msg = err instanceof Error ? err.message : String(err);
         vscode.window.showErrorMessage(
-          `VibeSec: Could not navigate to finding: ${msg}`
+          `SecureCycle: Could not navigate to finding: ${msg}`
         );
       }
     }
@@ -696,7 +696,7 @@ export function activate(context: vscode.ExtensionContext): void {
 
       if (!workspaceRoot) {
         vscode.window.showWarningMessage(
-          "VibeSec: No workspace folder open — nothing to reload."
+          "SecureCycle: No workspace folder open — nothing to reload."
         );
         return;
       }
@@ -709,7 +709,7 @@ export function activate(context: vscode.ExtensionContext): void {
       diagnosticCollection.clear();
 
       if (result.ok) {
-        vscode.window.showInformationMessage("VibeSec: Policy reloaded successfully.");
+        vscode.window.showInformationMessage("SecureCycle: Policy reloaded successfully.");
       } else {
         showPolicyErrors(result.errors, "reload");
       }
@@ -730,7 +730,7 @@ export function activate(context: vscode.ExtensionContext): void {
 
       const picks = discoverPolicyFiles(workspaceRoot, context.extensionPath);
       const picked = await vscode.window.showQuickPick(picks, {
-        title: "VibeSec — Open policy file",
+        title: "SecureCycle — Open policy file",
         placeHolder: "Choose a bundled, tool-folder, or workspace selector policy YAML to open",
         ignoreFocusOut: true,
       });
@@ -741,7 +741,7 @@ export function activate(context: vscode.ExtensionContext): void {
         await vscode.window.showTextDocument(uri);
       } catch (err: unknown) {
         const msg = err instanceof Error ? err.message : String(err);
-        vscode.window.showErrorMessage(`VibeSec: Could not open policy file: ${msg}`);
+        vscode.window.showErrorMessage(`SecureCycle: Could not open policy file: ${msg}`);
       }
     }
   );
@@ -758,7 +758,7 @@ export function activate(context: vscode.ExtensionContext): void {
       const lineNum = f.startLine + 1;
       const text = `${f.ruleId}  ·  ${path.basename(f.filePath)}:${lineNum}  ·  ${f.message}`;
       await vscode.env.clipboard.writeText(text);
-      vscode.window.showInformationMessage("VibeSec: Description copied to clipboard.");
+      vscode.window.showInformationMessage("SecureCycle: Description copied to clipboard.");
     },
   );
 
@@ -773,7 +773,7 @@ export function activate(context: vscode.ExtensionContext): void {
       const provider = await pickProvider("Which provider's API key are you setting?");
       if (!provider) { return; }
       const key = await vscode.window.showInputBox({
-        title:        `VibeSec — set ${PROVIDER_LABEL[provider]} API key`,
+        title:        `SecureCycle — set ${PROVIDER_LABEL[provider]} API key`,
         prompt:       `Paste your ${PROVIDER_LABEL[provider]} API key. It will be stored securely and never written to settings.`,
         password:     true,
         ignoreFocusOut: true,
@@ -782,7 +782,7 @@ export function activate(context: vscode.ExtensionContext): void {
       if (!key) { return; }
       const trimmed = key.trim();
       if (trimmed === "") {
-        vscode.window.showWarningMessage("VibeSec: Empty key — nothing was saved.");
+        vscode.window.showWarningMessage("SecureCycle: Empty key — nothing was saved.");
         return;
       }
       const resolvedProvider = providerFromKeyHint(provider, trimmed);
@@ -794,7 +794,7 @@ export function activate(context: vscode.ExtensionContext): void {
       await cfg.update("llmProvider", resolvedProvider, target);
       await cfg.update("llmModel", PROVIDER_DEFAULT_MODEL[resolvedProvider], target);
       vscode.window.showInformationMessage(
-        `VibeSec: ${PROVIDER_LABEL[resolvedProvider]} API key saved and selected. Run "VibeSec: Test API Key" to verify it.`,
+        `SecureCycle: ${PROVIDER_LABEL[resolvedProvider]} API key saved and selected. Run "SecureCycle: Test API Key" to verify it.`,
       );
     },
   );
@@ -806,7 +806,7 @@ export function activate(context: vscode.ExtensionContext): void {
       if (!provider) { return; }
       await clearApiKey(context, provider);
       vscode.window.showInformationMessage(
-        `VibeSec: ${PROVIDER_LABEL[provider]} API key removed.`,
+        `SecureCycle: ${PROVIDER_LABEL[provider]} API key removed.`,
       );
     },
   );
@@ -819,7 +819,7 @@ export function activate(context: vscode.ExtensionContext): void {
       const key = await getApiKey(context, provider);
       if (!key) {
         vscode.window.showWarningMessage(
-          `VibeSec: No ${PROVIDER_LABEL[provider]} API key is set. Run "VibeSec: Set API Key" first.`,
+          `SecureCycle: No ${PROVIDER_LABEL[provider]} API key is set. Run "SecureCycle: Set API Key" first.`,
         );
         return;
       }
@@ -828,23 +828,23 @@ export function activate(context: vscode.ExtensionContext): void {
       const baseUrl = provider === "custom" ? cfg.llmCustomBaseUrl : undefined;
       const selectionError = validateProviderSelection(provider, model, baseUrl);
       if (selectionError) {
-        vscode.window.showWarningMessage(`VibeSec: ${selectionError}`);
+        vscode.window.showWarningMessage(`SecureCycle: ${selectionError}`);
         return;
       }
       await vscode.window.withProgress(
         {
           location: vscode.ProgressLocation.Notification,
-          title:    `VibeSec: Testing ${PROVIDER_LABEL[provider]} (${model})…`,
+          title:    `SecureCycle: Testing ${PROVIDER_LABEL[provider]} (${model})…`,
         },
         async () => {
           try {
             await pingProvider(provider, key, model, baseUrl);
             vscode.window.showInformationMessage(
-              `VibeSec: ${PROVIDER_LABEL[provider]} (${model}) responded — your key works.`,
+              `SecureCycle: ${PROVIDER_LABEL[provider]} (${model}) responded — your key works.`,
             );
           } catch (err: unknown) {
             const msg = err instanceof Error ? err.message : String(err);
-            vscode.window.showErrorMessage(`VibeSec: ${msg}`);
+            vscode.window.showErrorMessage(`SecureCycle: ${msg}`);
           }
         },
       );
@@ -868,7 +868,7 @@ export function activate(context: vscode.ExtensionContext): void {
     if (!apiKey) {
       const action = "Set API Key";
       const choice = await vscode.window.showWarningMessage(
-        `VibeSec: No ${PROVIDER_LABEL[provider]} API key is set. Generate prompts after saving a key.`,
+        `SecureCycle: No ${PROVIDER_LABEL[provider]} API key is set. Generate prompts after saving a key.`,
         action,
       );
       if (choice === action) {
@@ -880,7 +880,7 @@ export function activate(context: vscode.ExtensionContext): void {
     const baseUrl = provider === "custom" ? cfg.llmCustomBaseUrl : undefined;
     const selectionError = validateProviderSelection(provider, model, baseUrl);
     if (selectionError) {
-      vscode.window.showWarningMessage(`VibeSec: ${selectionError}`);
+      vscode.window.showWarningMessage(`SecureCycle: ${selectionError}`);
       return { ok: false };
     }
     const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
@@ -896,10 +896,10 @@ export function activate(context: vscode.ExtensionContext): void {
       ? err.message
       : err instanceof Error ? err.message : String(err);
     if (err instanceof LlmClientError && err.statusCode === 429) {
-      vscode.window.showWarningMessage(`VibeSec: ${msg}`);
+      vscode.window.showWarningMessage(`SecureCycle: ${msg}`);
       return;
     }
-    vscode.window.showErrorMessage(`VibeSec: ${msg}`);
+    vscode.window.showErrorMessage(`SecureCycle: ${msg}`);
   }
 
   const generatePromptsCmd = vscode.commands.registerCommand(
@@ -908,7 +908,7 @@ export function activate(context: vscode.ExtensionContext): void {
       const findings = findingsProvider.getAllFindings();
       if (findings.length === 0) {
         vscode.window.showInformationMessage(
-          "VibeSec: No findings to generate prompts for. Run a scan first.",
+          "SecureCycle: No findings to generate prompts for. Run a scan first.",
         );
         return;
       }
@@ -919,7 +919,7 @@ export function activate(context: vscode.ExtensionContext): void {
       await vscode.window.withProgress(
         {
           location: vscode.ProgressLocation.Notification,
-          title:    `VibeSec: Generating prompts (${cfg.promptMode}, ${PROVIDER_LABEL[ctx.provider]})…`,
+          title:    `SecureCycle: Generating prompts (${cfg.promptMode}, ${PROVIDER_LABEL[ctx.provider]})…`,
           cancellable: true,
         },
         async (progress, token) => {
@@ -1005,7 +1005,7 @@ export function activate(context: vscode.ExtensionContext): void {
             }
 
             vscode.window.showInformationMessage(
-              "VibeSec: Prompts ready. Right-click a finding or file in the Findings panel and pick Copy Prompt.",
+              "SecureCycle: Prompts ready. Right-click a finding or file in the Findings panel and pick Copy Prompt.",
             );
           } catch (err) {
             reportLlmFailure(err);
@@ -1020,7 +1020,7 @@ export function activate(context: vscode.ExtensionContext): void {
     const cached = findingsProvider.cachedPromptForFinding(f);
     if (cached) {
       await vscode.env.clipboard.writeText(cached);
-      vscode.window.showInformationMessage("VibeSec: Prompt copied to clipboard.");
+      vscode.window.showInformationMessage("SecureCycle: Prompt copied to clipboard.");
       return;
     }
     const ctx = await resolveLlmCallContext();
@@ -1028,14 +1028,14 @@ export function activate(context: vscode.ExtensionContext): void {
     await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title:    `VibeSec: Generating prompt for ${path.basename(f.filePath)}:${f.startLine + 1}…`,
+        title:    `SecureCycle: Generating prompt for ${path.basename(f.filePath)}:${f.startLine + 1}…`,
       },
       async () => {
         try {
           const text = await generatePromptForVuln(f, ctx.opts);
           findingsProvider.setCachedPrompt(findingId(f), text);
           await vscode.env.clipboard.writeText(text);
-          vscode.window.showInformationMessage("VibeSec: Prompt copied to clipboard.");
+          vscode.window.showInformationMessage("SecureCycle: Prompt copied to clipboard.");
         } catch (err) { reportLlmFailure(err); }
       },
     );
@@ -1045,12 +1045,12 @@ export function activate(context: vscode.ExtensionContext): void {
     const cached = findingsProvider.cachedPromptForFile(filePath);
     if (cached) {
       await vscode.env.clipboard.writeText(cached);
-      vscode.window.showInformationMessage("VibeSec: File prompt copied to clipboard.");
+      vscode.window.showInformationMessage("SecureCycle: File prompt copied to clipboard.");
       return;
     }
     const findings = findingsProvider.getFindingsForFile(filePath);
     if (findings.length === 0) {
-      vscode.window.showWarningMessage("VibeSec: No findings for this file.");
+      vscode.window.showWarningMessage("SecureCycle: No findings for this file.");
       return;
     }
     const ctx = await resolveLlmCallContext();
@@ -1058,14 +1058,14 @@ export function activate(context: vscode.ExtensionContext): void {
     await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title:    `VibeSec: Generating prompt for ${path.basename(filePath)}…`,
+        title:    `SecureCycle: Generating prompt for ${path.basename(filePath)}…`,
       },
       async () => {
         try {
           const text = await generatePromptForFile(filePath, findings, ctx.opts);
           findingsProvider.setCachedPrompt(promptCacheFileKey(filePath), text);
           await vscode.env.clipboard.writeText(text);
-          vscode.window.showInformationMessage("VibeSec: File prompt copied to clipboard.");
+          vscode.window.showInformationMessage("SecureCycle: File prompt copied to clipboard.");
         } catch (err) { reportLlmFailure(err); }
       },
     );
@@ -1095,14 +1095,14 @@ export function activate(context: vscode.ExtensionContext): void {
       const findings = findingsProvider.getAllFindings();
       if (findings.length === 0) {
         vscode.window.showInformationMessage(
-          "VibeSec: No findings to generate a prompt for. Run a scan first.",
+          "SecureCycle: No findings to generate a prompt for. Run a scan first.",
         );
         return;
       }
       const cached = findingsProvider.cachedPromptForProject();
       if (cached) {
         await vscode.env.clipboard.writeText(cached);
-        vscode.window.showInformationMessage("VibeSec: Project prompt copied to clipboard.");
+        vscode.window.showInformationMessage("SecureCycle: Project prompt copied to clipboard.");
         return;
       }
       const ctx = await resolveLlmCallContext();
@@ -1110,14 +1110,14 @@ export function activate(context: vscode.ExtensionContext): void {
       await vscode.window.withProgress(
         {
           location: vscode.ProgressLocation.Notification,
-          title:    "VibeSec: Generating project-wide prompt…",
+          title:    "SecureCycle: Generating project-wide prompt…",
         },
         async () => {
           try {
             const text = await generatePromptForProject(findings, ctx.opts);
             findingsProvider.setCachedPrompt(PROMPT_CACHE_PROJECT_KEY, text);
             await vscode.env.clipboard.writeText(text);
-            vscode.window.showInformationMessage("VibeSec: Project prompt copied to clipboard.");
+            vscode.window.showInformationMessage("SecureCycle: Project prompt copied to clipboard.");
           } catch (err) { reportLlmFailure(err); }
         },
       );

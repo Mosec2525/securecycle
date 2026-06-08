@@ -1,4 +1,4 @@
-// Wire-protocol types for the VibeSec Control Center webview.
+// Wire-protocol types for the SecureCycle Control Center webview.
 //
 // SOURCE OF TRUTH for the control-center <-> extension messages. A verbatim
 // copy lives in `webview/controlCenter/types.ts` so the React bundle compiles

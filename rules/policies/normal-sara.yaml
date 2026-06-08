@@ -1,4 +1,4 @@
-# VibeSec normal scan policy
+# SecureCycle normal scan policy
 # Purpose: standard pattern-based scanning.
 # Activate this file from Control Center → Rules.
 # This file starts empty. Turn ON rules/default.yaml separately if you want the bundled default rules.

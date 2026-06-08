@@ -21,7 +21,7 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /opt/vibesec
+WORKDIR /opt/securecycle
 
 COPY --from=build /app/out ./out
 COPY --from=build /app/node_modules ./node_modules
@@ -30,5 +30,5 @@ COPY rules ./rules
 
 WORKDIR /workspace
 
-ENTRYPOINT ["node", "/opt/vibesec/out/cli.js"]
+ENTRYPOINT ["node", "/opt/securecycle/out/cli.js"]
 CMD ["scan", "/workspace"]

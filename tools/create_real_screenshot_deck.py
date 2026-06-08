@@ -13,7 +13,7 @@ import create_functionality_testing_deck as base
 
 ROOT = Path(__file__).resolve().parents[1]
 REAL = ROOT / "docs" / "real-screenshots"
-OUT = ROOT / "docs" / "VibeSec_Functionality_Testing_and_UML_Diagrams.pptx"
+OUT = ROOT / "docs" / "SecureCycle_Functionality_Testing_and_UML_Diagrams.pptx"
 REPORT = ROOT / "docs" / "real-screenshots-report.json"
 
 
@@ -27,7 +27,7 @@ def real_title_slide(prs: Presentation) -> None:
     slide = prs.slides.add_slide(prs.slide_layouts[6])
     slide.background.fill.solid()
     slide.background.fill.fore_color.rgb = base.NAVY
-    base.add_text(slide, 0.82, 1.0, 11.7, 0.55, "VibeSec", size=38, color=base.WHITE, bold=True)
+    base.add_text(slide, 0.82, 1.0, 11.7, 0.55, "SecureCycle", size=38, color=base.WHITE, bold=True)
     base.add_text(
         slide,
         0.85,
@@ -45,7 +45,7 @@ def real_title_slide(prs: Presentation) -> None:
         3.0,
         11.2,
         0.8,
-        "This deck uses actual screenshots from the VibeSec VS Code Extension Development Host while the extension is running.",
+        "This deck uses actual screenshots from the SecureCycle VS Code Extension Development Host while the extension is running.",
         size=16,
         color=RGBColor(203, 213, 225),
     )
@@ -55,8 +55,8 @@ def real_title_slide(prs: Presentation) -> None:
 def real_summary_slide(prs: Presentation) -> None:
     slide = base.new_slide(prs, "Real Screenshot Evidence", "Captured from the running VS Code Extension Development Host.")
     cards = [
-        ("Extension Host", "VibeSec activity bar and Analysis webview loaded", "00_vscode_dev_host.png", base.BLUE),
-        ("Command Surface", "Command Palette lists VibeSec commands", "15_command_palette_vibesec.png", base.CYAN),
+        ("Extension Host", "SecureCycle activity bar and Analysis webview loaded", "00_vscode_dev_host.png", base.BLUE),
+        ("Command Surface", "Command Palette lists SecureCycle commands", "15_command_palette_vibesec.png", base.CYAN),
         ("Scan Results", "14 findings shown from real scan command", "10_scan_current_file_command_results.png", base.GREEN),
         ("Control Center", "Dashboard and settings webview running", "11_control_center_dashboard.png", base.PURPLE),
     ]
@@ -71,7 +71,7 @@ def real_summary_slide(prs: Presentation) -> None:
         3.55,
         11.65,
         1.0,
-        "Important: these are not generated mockups. They were captured from the running extension window after launching VS Code with --extensionDevelopmentPath, opening the sample project, and executing VibeSec commands.",
+        "Important: these are not generated mockups. They were captured from the running extension window after launching VS Code with --extensionDevelopmentPath, opening the sample project, and executing SecureCycle commands.",
         size=16,
         color=base.INK,
     )
@@ -88,7 +88,7 @@ def real_summary_slide(prs: Presentation) -> None:
 
 
 def function_coverage_slide(prs: Presentation) -> None:
-    slide = base.new_slide(prs, "Function Coverage Map", "Each VibeSec function is tied to a real running screenshot.")
+    slide = base.new_slide(prs, "Function Coverage Map", "Each SecureCycle function is tied to a real running screenshot.")
     rows = [
         ["Function", "Evidence screenshot", "What it proves"],
         ["scanCurrentFile", "Scan results", "Current sample file scanned and 14 findings displayed."],
@@ -129,9 +129,9 @@ def notes_slide(prs: Presentation) -> None:
     base.add_rect(slide, 0.75, 1.35, 5.75, 4.9, "", fill=base.WHITE, line=base.LINE)
     base.add_text(slide, 1.02, 1.62, 5.1, 0.3, "Captured live", size=16, color=base.GREEN, bold=True)
     live = [
-        "VS Code Extension Development Host running VibeSec.",
+        "VS Code Extension Development Host running SecureCycle.",
         "Analysis webview loaded from the extension.",
-        "VibeSec command palette entries visible.",
+        "SecureCycle command palette entries visible.",
         "Current-file scan executed against sample JavaScript.",
         "Results panel shows 14 findings and editor diagnostics.",
         "Control Center dashboard/settings webview rendered.",
@@ -177,10 +177,10 @@ def main() -> None:
     real_title_slide(prs)
     real_summary_slide(prs)
     function_coverage_slide(prs)
-    add_real_image_slide(prs, "Real Screenshot: Extension Host", "VibeSec loaded in VS Code Extension Development Host.", "00_vscode_dev_host.png")
-    add_real_image_slide(prs, "Real Screenshot: Command Palette", "VibeSec command functions visible in VS Code.", "15_command_palette_vibesec.png")
+    add_real_image_slide(prs, "Real Screenshot: Extension Host", "SecureCycle loaded in VS Code Extension Development Host.", "00_vscode_dev_host.png")
+    add_real_image_slide(prs, "Real Screenshot: Command Palette", "SecureCycle command functions visible in VS Code.", "15_command_palette_vibesec.png")
     add_real_image_slide(prs, "Real Screenshot: Sample File Open", "Vulnerable JavaScript sample open in the editor.", "08_sample_file_open.png")
-    add_real_image_slide(prs, "Real Screenshot: Scan Results", "VibeSec Scan Current File executed; 14 findings shown.", "10_scan_current_file_command_results.png")
+    add_real_image_slide(prs, "Real Screenshot: Scan Results", "SecureCycle Scan Current File executed; 14 findings shown.", "10_scan_current_file_command_results.png")
     add_real_image_slide(prs, "Real Screenshot: Finding Actions", "Result card, details area, and fix-prompt surface visible.", "16_analysis_full_fix_tab.png")
     add_real_image_slide(prs, "Real Screenshot: Control Center Dashboard", "Dashboard with scan history, severity breakdown, and quick actions.", "11_control_center_dashboard.png")
     add_real_image_slide(prs, "Real Screenshot: Settings/API Surface", "Engine, file-extension, provider, model, and API-related settings.", "14_control_center_settings.png")

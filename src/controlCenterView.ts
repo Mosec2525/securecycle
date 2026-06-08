@@ -62,7 +62,7 @@ const FALLBACK_DEFAULTS: SettingsValues = {
 };
 
 
-const CUSTOM_RULE_FILE_TEMPLATE = `# VibeSec custom policy
+const CUSTOM_RULE_FILE_TEMPLATE = `# SecureCycle custom policy
 # Purpose: project-specific rules created by your team.
 # Activate this file from Control Center → Rules.
 
@@ -94,7 +94,7 @@ rules: []
 #       confidence: LOW
 `;
 
-const NORMAL_POLICY_TEMPLATE = `# VibeSec normal scan policy
+const NORMAL_POLICY_TEMPLATE = `# SecureCycle normal scan policy
 # Purpose: standard pattern-based scanning.
 # Activate this file from Control Center → Rules.
 # This file starts empty. Turn ON rules/default.yaml separately if you want the bundled default rules.
@@ -132,7 +132,7 @@ rules: []
 #       confidence: MEDIUM
 `;
 
-const TAINT_POLICY_TEMPLATE = `# VibeSec taint analysis policy
+const TAINT_POLICY_TEMPLATE = `# SecureCycle taint analysis policy
 # Purpose: source → flow → sink tracking.
 # Activate this file from Control Center → Rules.
 # This file starts empty. Turn ON rules/taint.yaml separately if you want the bundled taint rules.
@@ -183,7 +183,7 @@ rules: []
 `;
 
 // ControlCenterController — singleton editor-area WebviewPanel that hosts the
-// VibeSec Control Center (Dashboard / Settings / Logs / Rules).
+// SecureCycle Control Center (Dashboard / Settings / Logs / Rules).
 //
 // Lifecycle:
 //   const cc = new ControlCenterController(context, hooks);
@@ -296,7 +296,7 @@ export class ControlCenterController implements vscode.Disposable {
 
     const panel = vscode.window.createWebviewPanel(
       ControlCenterController.viewType,
-      "VibeSec Control Center",
+      "SecureCycle Control Center",
       vscode.ViewColumn.Active,
       {
         enableScripts: true,
@@ -426,7 +426,7 @@ export class ControlCenterController implements vscode.Disposable {
           await setApiKey(this.context, provider, key);
 
           // Make the key usable immediately: saving a provider key also selects
-          // that provider. If the key looks like a Groq gsk_ key, VibeSec selects
+          // that provider. If the key looks like a Groq gsk_ key, SecureCycle selects
           // Groq and fills its default model so the user only has to paste the key.
           const target = this.writeTarget();
           const cfg = vscode.workspace.getConfiguration("vibesec");
@@ -541,7 +541,7 @@ export class ControlCenterController implements vscode.Disposable {
       }
       case "resetSettingsToDefaults": {
         const proceed = await vscode.window.showWarningMessage(
-          "Reset all VibeSec settings to their defaults?",
+          "Reset all SecureCycle settings to their defaults?",
           {
             modal: true,
             detail:
@@ -566,13 +566,13 @@ export class ControlCenterController implements vscode.Disposable {
         }
         if (failures.length > 0) {
           vscode.window.showWarningMessage(
-            `VibeSec: Reset finished with ${failures.length} failure(s): ${failures.join(", ")}`,
+            `SecureCycle: Reset finished with ${failures.length} failure(s): ${failures.join(", ")}`,
           );
         } else {
           this.postMessage({
             type: "toast",
             tone: "info",
-            message: "VibeSec settings reset to defaults.",
+            message: "SecureCycle settings reset to defaults.",
           });
         }
         break;
@@ -607,7 +607,7 @@ export class ControlCenterController implements vscode.Disposable {
             message:
               file?.source === "external"
                 ? "External rule registries aren't connected yet — coming in a later sprint."
-                : "VibeSec couldn't find that rule file on disk.",
+                : "SecureCycle couldn't find that rule file on disk.",
           });
           break;
         }
@@ -719,7 +719,7 @@ export class ControlCenterController implements vscode.Disposable {
     }
     fs.writeFileSync(
       policyPath,
-      "# .vibesec.yaml — edited by VibeSec Control Center\n" + yaml.dump(doc, { lineWidth: 100 }),
+      "# .vibesec.yaml — edited by SecureCycle Control Center\n" + yaml.dump(doc, { lineWidth: 100 }),
       "utf-8",
     );
   }
@@ -1021,8 +1021,8 @@ export class ControlCenterController implements vscode.Disposable {
     const label = kind === "taint" ? "taint" : kind === "custom" ? "custom" : "normal";
     const dir = this.ensureToolPoliciesDir();
     const entered = await vscode.window.showInputBox({
-      title: `VibeSec — New ${label} policy`,
-      prompt: `Enter a name. VibeSec will create a separate YAML file inside the tool policy folder: rules/policies/.`,
+      title: `SecureCycle — New ${label} policy`,
+      prompt: `Enter a name. SecureCycle will create a separate YAML file inside the tool policy folder: rules/policies/.`,
       placeHolder: kind === "taint" ? "taint-api-checks" : kind === "custom" ? "team-custom-rules" : "normal-baseline",
       ignoreFocusOut: true,
       validateInput: (value) => {
@@ -1096,7 +1096,7 @@ export class ControlCenterController implements vscode.Disposable {
             delete doc.activeNormalPolicyFile;
             delete doc.activeTaintPolicyFile;
             this.updatePresetMirror(doc);
-            fs.writeFileSync(policyPath, "# .vibesec.yaml — edited by VibeSec Control Center\n" + yaml.dump(doc, { lineWidth: 100 }), "utf-8");
+            fs.writeFileSync(policyPath, "# .vibesec.yaml — edited by SecureCycle Control Center\n" + yaml.dump(doc, { lineWidth: 100 }), "utf-8");
           }
         }
       } catch {
@@ -1111,7 +1111,7 @@ export class ControlCenterController implements vscode.Disposable {
 
   private async pickAndOpenFolder(): Promise<void> {
     const picks = await vscode.window.showOpenDialog({
-      title: "VibeSec — Open folder",
+      title: "SecureCycle — Open folder",
       canSelectFiles: false,
       canSelectFolders: true,
       canSelectMany: false,
@@ -1138,7 +1138,7 @@ export class ControlCenterController implements vscode.Disposable {
 
   private async pickAndOpenFile(): Promise<void> {
     const picks = await vscode.window.showOpenDialog({
-      title: "VibeSec — Open file",
+      title: "SecureCycle — Open file",
       canSelectFiles: true,
       canSelectFolders: false,
       canSelectMany: false,
@@ -1216,9 +1216,9 @@ export class ControlCenterController implements vscode.Disposable {
   }
 
   private buildImportedPolicyContent(originalText: string, obj: Record<string, unknown>, sourceUrl: string): string {
-    // If the URL points to a raw Semgrep rule file, wrap it in VibeSec's
+    // If the URL points to a raw Semgrep rule file, wrap it in SecureCycle's
     // standard custom-policy structure so the imported file is ready to use
-    // as a selectable policy. If the URL already points to a full VibeSec
+    // as a selectable policy. If the URL already points to a full SecureCycle
     // policy, preserve it exactly.
     if (Array.isArray(obj.rules) && !this.looksLikePolicyDocument(obj)) {
       const wrapped = {
@@ -1237,7 +1237,7 @@ export class ControlCenterController implements vscode.Disposable {
         },
         rules: obj.rules,
       };
-      return `# VibeSec imported custom policy\n# Source: ${sourceUrl}\n\n${yaml.dump(wrapped, { lineWidth: -1, noRefs: true })}`;
+      return `# SecureCycle imported custom policy\n# Source: ${sourceUrl}\n\n${yaml.dump(wrapped, { lineWidth: -1, noRefs: true })}`;
     }
     return originalText.endsWith("\n") ? originalText : originalText + "\n";
   }
@@ -1246,7 +1246,7 @@ export class ControlCenterController implements vscode.Disposable {
     const dir = this.ensureToolPoliciesDir();
 
     const entered = await vscode.window.showInputBox({
-      title: "VibeSec — Import policy YAML from URL",
+      title: "SecureCycle — Import policy YAML from URL",
       prompt: "Paste a GitHub YAML link or any direct link to a valid .yaml/.yml file.",
       placeHolder: "https://github.com/user/repo/blob/main/rules/security.yaml",
       ignoreFocusOut: true,
@@ -1268,7 +1268,7 @@ export class ControlCenterController implements vscode.Disposable {
     const downloadUrl = this.githubUrlToRaw(originalUrl);
 
     try {
-      const response = await fetch(downloadUrl, { headers: { "User-Agent": "VibeSec" } });
+      const response = await fetch(downloadUrl, { headers: { "User-Agent": "SecureCycle" } });
       if (!response.ok) {
         throw new Error(`HTTP ${response.status} ${response.statusText}`);
       }
@@ -1279,13 +1279,13 @@ export class ControlCenterController implements vscode.Disposable {
       }
       const obj = parsed as Record<string, unknown>;
       if (!Array.isArray(obj.rules) && !this.looksLikePolicyDocument(obj)) {
-        throw new Error("YAML must contain either a top-level rules: array or VibeSec policy keys such as presets/severity/files.");
+        throw new Error("YAML must contain either a top-level rules: array or SecureCycle policy keys such as presets/severity/files.");
       }
 
       const suggested = this.fileNameFromUrl(originalUrl).replace(/\.ya?ml$/i, "") || "imported-policy";
       const name = await vscode.window.showInputBox({
-        title: "VibeSec — Name imported policy",
-        prompt: "Enter a name for this imported policy. VibeSec will create a new separate policy file.",
+        title: "SecureCycle — Name imported policy",
+        prompt: "Enter a name for this imported policy. SecureCycle will create a new separate policy file.",
         value: suggested,
         ignoreFocusOut: true,
         validateInput: (value) => {
@@ -1322,7 +1322,7 @@ export class ControlCenterController implements vscode.Disposable {
       return;
     }
     const rel = await vscode.window.showInputBox({
-      title: "VibeSec — New file",
+      title: "SecureCycle — New file",
       prompt: "Enter a workspace-relative file path, for example src/example.js",
       placeHolder: "src/example.js",
       ignoreFocusOut: true,
@@ -1440,7 +1440,7 @@ export class ControlCenterController implements vscode.Disposable {
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="Content-Security-Policy" content="${csp}" />
-  <title>VibeSec Control Center</title>
+  <title>SecureCycle Control Center</title>
   <link rel="stylesheet" href="${stylesUri}" />
   <style>
     html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }

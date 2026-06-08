@@ -1,6 +1,6 @@
-# VibeSec Release Checklist
+# SecureCycle Release Checklist
 
-Use this checklist before creating a VibeSec release tag or publishing a VSIX.
+Use this checklist before creating a SecureCycle release tag or publishing a VSIX.
 
 ## 1. Version and Metadata
 
@@ -70,11 +70,11 @@ npm run release:vsix
 
 Install the package in a clean VS Code window and smoke test:
 
-- `VibeSec: Scan Current File`
-- `VibeSec: Scan Whole Project`
-- `VibeSec: Open Control Center`
-- `VibeSec: Open Policy File`
-- `VibeSec: Generate Prompts` with a configured provider
+- `SecureCycle: Scan Current File`
+- `SecureCycle: Scan Whole Project`
+- `SecureCycle: Open Control Center`
+- `SecureCycle: Open Policy File`
+- `SecureCycle: Generate Prompts` with a configured provider
 
 ## 5. Tag and Publish
 

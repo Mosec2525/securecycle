@@ -268,7 +268,7 @@ export function scanFile(
       tmp = writeTempRuleFile(policy);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
-      reject(new Error(`VibeSec: Could not write temp rule file: ${msg}`));
+      reject(new Error(`SecureCycle: Could not write temp rule file: ${msg}`));
       return;
     }
 

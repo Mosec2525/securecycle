@@ -1,29 +1,29 @@
-# VibeSec Docker Scanner
+# SecureCycle Docker Scanner
 
-The Docker image bundles VibeSec's CLI scanner with Semgrep, so users can scan a project without installing Semgrep on the host. Users only need Docker.
+The Docker image bundles SecureCycle's CLI scanner with Semgrep, so users can scan a project without installing Semgrep on the host. Users only need Docker.
 
-## Install And Run From Docker Hub
+## Install And Run From GHCR
 
 From any project directory:
 
 ```bash
-docker run --rm -v "$PWD:/workspace" mosec2525/vibesec:latest
+docker run --rm -v "$PWD:/workspace" ghcr.io/mosec2525/securecycle:latest
 ```
 
 PowerShell:
 
 ```powershell
-docker run --rm -v "${PWD}:/workspace" mosec2525/vibesec:latest
+docker run --rm -v "${PWD}:/workspace" ghcr.io/mosec2525/securecycle:latest
 ```
 
 Docker pulls the image automatically the first time. After that, the image is cached locally and runs faster.
 
-![VibeSec Docker scanner command and output](docker-screenshots/vibesec-docker-scan-output.png)
+![SecureCycle Docker scanner command and output](docker-screenshots/vibesec-docker-scan-output.png)
 
 ## Build Locally
 
 ```bash
-docker build -t vibesec:local .
+docker build -t securecycle:local .
 ```
 
 ## Scan A Project
@@ -31,13 +31,13 @@ docker build -t vibesec:local .
 From a project directory:
 
 ```bash
-docker run --rm -v "$PWD:/workspace" vibesec:local
+docker run --rm -v "$PWD:/workspace" securecycle:local
 ```
 
 PowerShell:
 
 ```powershell
-docker run --rm -v "${PWD}:/workspace" vibesec:local
+docker run --rm -v "${PWD}:/workspace" securecycle:local
 ```
 
 The container scans `/workspace` by default. It uses the mounted project's `.vibesec.yaml` when present, otherwise it falls back to the bundled `vibesec:default` policy.
@@ -45,7 +45,7 @@ The container scans `/workspace` by default. It uses the mounted project's `.vib
 ## JSON Output
 
 ```bash
-docker run --rm -v "$PWD:/workspace" vibesec:local --json
+docker run --rm -v "$PWD:/workspace" securecycle:local --json
 ```
 
 ## Exit Codes
@@ -57,18 +57,18 @@ docker run --rm -v "$PWD:/workspace" vibesec:local --json
 Use `--no-fail-on-findings` when you want findings reported but a zero exit code:
 
 ```bash
-docker run --rm -v "$PWD:/workspace" vibesec:local --no-fail-on-findings
+docker run --rm -v "$PWD:/workspace" securecycle:local --no-fail-on-findings
 ```
 
 ## Published Image
 
-The public image is available on Docker Hub:
+The current public image is published to GitHub Container Registry:
 
-<https://hub.docker.com/r/mosec2525/vibesec>
+<https://github.com/Mosec2525/securecycle/pkgs/container/securecycle>
 
 ```bash
-docker pull mosec2525/vibesec:latest
-docker run --rm -v "$PWD:/workspace" mosec2525/vibesec:latest
+docker pull ghcr.io/mosec2525/securecycle:latest
+docker run --rm -v "$PWD:/workspace" ghcr.io/mosec2525/securecycle:latest
 ```
 
-The GitHub workflow also publishes a mirror to GitHub Container Registry on pushes to `main` and version tags.
+The legacy Docker Hub image remains available at <https://hub.docker.com/r/mosec2525/vibesec> for older instructions.

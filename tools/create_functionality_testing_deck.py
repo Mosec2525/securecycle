@@ -20,7 +20,7 @@ from pptx.util import Inches, Pt
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 ASSETS = DOCS / "ppt-assets"
-PPTX_OUT = DOCS / "VibeSec_Functionality_Testing_and_UML_Diagrams.pptx"
+PPTX_OUT = DOCS / "SecureCycle_Functionality_Testing_and_UML_Diagrams.pptx"
 REPORT_OUT = ASSETS / "functionality-test-report.json"
 
 SLIDE_W = 13.333
@@ -398,7 +398,7 @@ def add_title(slide, title: str, subtitle: str | None = None) -> None:
         p2.font.color.rgb = MUTED
 
 
-def add_footer(slide, text: str = "VibeSec local functionality testing evidence") -> None:
+def add_footer(slide, text: str = "SecureCycle local functionality testing evidence") -> None:
     box = slide.shapes.add_textbox(Inches(0.55), Inches(7.12), Inches(12.2), Inches(0.22))
     p = box.text_frame.paragraphs[0]
     p.text = text
@@ -488,7 +488,7 @@ def title_slide(prs: Presentation):
     slide = prs.slides.add_slide(prs.slide_layouts[6])
     slide.background.fill.solid()
     slide.background.fill.fore_color.rgb = NAVY
-    add_text(slide, 0.85, 1.0, 11.7, 0.6, "VibeSec", size=36, color=WHITE, bold=True)
+    add_text(slide, 0.85, 1.0, 11.7, 0.6, "SecureCycle", size=36, color=WHITE, bold=True)
     add_text(
         slide,
         0.88,

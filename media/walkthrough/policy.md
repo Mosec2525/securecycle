@@ -1,8 +1,8 @@
 # Customize with a Policy File
 
-Drop a `.vibesec.yaml` file in your project root to control how VibeSec scans.
+Drop a `.vibesec.yaml` file in your project root to control how SecureCycle scans.
 
-Use **VibeSec: Open Policy File** to create one with a starter template, or create it manually:
+Use **SecureCycle: Open Policy File** to create one with a starter template, or create it manually:
 
 ```yaml
 # Which rule packs to use
@@ -37,4 +37,4 @@ rules:
 | `files.exclude` | Glob patterns to skip (node_modules, test files, etc.). |
 | `rules` | Inline Semgrep rules for team-specific checks. |
 
-After editing, run **VibeSec: Reload Policy** to pick up changes without restarting VS Code.
+After editing, run **SecureCycle: Reload Policy** to pick up changes without restarting VS Code.

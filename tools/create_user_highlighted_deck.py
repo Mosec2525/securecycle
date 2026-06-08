@@ -11,7 +11,7 @@ import create_functionality_testing_deck as base
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "docs" / "VibeSec_Functionality_Testing_and_UML_Diagrams.pptx"
+OUT = ROOT / "docs" / "SecureCycle_Functionality_Testing_and_UML_Diagrams.pptx"
 ASSETS = ROOT / "docs" / "highlighted-function-screens"
 
 W, H = 1366, 768
@@ -79,7 +79,7 @@ def button(d, x, y, w, h, label, fill=(10, 16, 12), outline=LINE, text=TEXT):
 def side_nav(d, active="Dashboard", control_center=True):
     d.rectangle((0, 0, 255, H), fill=(5, 12, 8))
     rect(d, (14, 24, 50, 60), fill=ACCENT, outline=ACCENT, radius=8)
-    txt(d, (58, 24), "VibeSec", fnt=F_H)
+    txt(d, (58, 24), "SecureCycle", fnt=F_H)
     txt(d, (58, 49), "CONTROL CENTER" if control_center else "ANALYSIS", fill=FAINT, fnt=F_MONO_SMALL)
     d.line((0, 86, 245, 86), fill=LINE)
     txt(d, (14, 124), "WORKSPACE", fill=FAINT, fnt=F_MONO_SMALL)
@@ -220,7 +220,7 @@ def rules_policy_toggles():
     policies = [
         ("rules/default.yaml", "OWASP Top 10 baseline - injection, crypto, secrets, XSS, auth, integrity.", "141", "rules", True),
         ("rules/taint.yaml", "Taint analysis - tracks user input from source to dangerous sink within a file.", "13", "rules", True),
-        ("rules/policies/normal-sara.yaml", "Tool policy file - stored inside VibeSec's rules/policies folder.", "0", "rules", False),
+        ("rules/policies/normal-sara.yaml", "Tool policy file - stored inside SecureCycle's rules/policies folder.", "0", "rules", False),
     ]
     y = 240
     for name, desc, count, unit, on in policies:
@@ -257,7 +257,7 @@ def rules_individual_toggle():
         d.ellipse((1000 if i < 4 else 985, y + 41, 1017 if i < 4 else 1002, y + 58), fill=BG)
         y += 112
     rect(d, (890, 842, 1310, 898), fill=PANEL2, outline=LINE)
-    txt(d, (929, 861), "VibeSec: Policy reloaded successfully.", fnt=F)
+    txt(d, (929, 861), "SecureCycle: Policy reloaded successfully.", fnt=F)
     hi(d, (912, 605, 1051, 688))
     hi(d, (931, 747, 1068, 834))
     hi(d, (888, 840, 1312, 900))
@@ -283,8 +283,8 @@ def analysis_generate():
     button(d, 185, 518, 100, 31, "Generate", fill=(45, 72, 32), outline=ACCENT, text=ACCENT)
     button(d, 298, 518, 86, 31, "Copy all")
     rect(d, (1310, 687, 1910, 797), fill=PANEL2, outline=LINE)
-    txt(d, (1350, 720), "VibeSec: Generating prompts (perFile, Groq)... File 1/1 - insecure.py", fnt=F)
-    txt(d, (1350, 762), "Source: VibeSec", fill=MUTED, fnt=F_SMALL)
+    txt(d, (1350, 720), "SecureCycle: Generating prompts (perFile, Groq)... File 1/1 - insecure.py", fnt=F)
+    txt(d, (1350, 762), "Source: SecureCycle", fill=MUTED, fnt=F_SMALL)
     hi(d, (172, 507, 303, 564))
     hi(d, (1310, 686, 1911, 798))
     return save(ASSETS / "06_generate_prompt_progress.png", img)
@@ -327,7 +327,7 @@ def dashboard_actions():
         txt(d, (x + 16, 336), num, fnt=font(30, True))
     rect(d, (678, 32, 1072, 462), fill=PANEL, outline=LINE)
     txt(d, (698, 52), "QUICK ACTIONS", fill=FAINT, fnt=F_MONO_SMALL)
-    actions = ["Scan project\nRun full Semgrep sweep", "Open policy file\nChoose any VibeSec policy to open", "Reload policy\nRe-parse rules from disk", "New normal policy\nCreate a named normal scan policy", "New taint policy\nCreate a named taint scan policy"]
+    actions = ["Scan project\nRun full Semgrep sweep", "Open policy file\nChoose any SecureCycle policy to open", "Reload policy\nRe-parse rules from disk", "New normal policy\nCreate a named normal scan policy", "New taint policy\nCreate a named taint scan policy"]
     y = 82
     for a in actions:
         rect(d, (698, y, 1055, y + 65), fill=PANEL2, outline=LINE)
@@ -352,10 +352,10 @@ def open_policy():
     d = ImageDraw.Draw(img)
     dashboard_actions_bg(d)
     rect(d, (20, 6, 765, 310), fill=(30, 32, 34), outline=LINE)
-    txt(d, (291, 18), "VibeSec - Open policy file", fnt=F)
+    txt(d, (291, 18), "SecureCycle - Open policy file", fnt=F)
     rect(d, (22, 46, 755, 80), fill=(20, 25, 27), outline=(80, 140, 170))
     options = [
-        ("Bundled normal scan policy", "rules/default.yaml", "Default VibeSec rules shipped with the extension"),
+        ("Bundled normal scan policy", "rules/default.yaml", "Default SecureCycle rules shipped with the extension"),
         ("Bundled taint policy", "rules/taint.yaml", "Taint source-to-sink rules shipped with the extension"),
         ("normal-sara.yaml", "tool policy folder", ""),
         (".vibesec.yaml", "workspace selector", ""),
@@ -394,14 +394,14 @@ def new_policy(kind="normal"):
     img = Image.new("RGB", (1191, 623), BG)
     d = ImageDraw.Draw(img)
     dashboard_actions_bg(d)
-    title = "VibeSec - New normal policy" if kind == "normal" else "VibeSec - New taint policy"
+    title = "SecureCycle - New normal policy" if kind == "normal" else "SecureCycle - New taint policy"
     value = "normal-baseline" if kind == "normal" else "taint-api-checks"
     button_text = "New normal policy" if kind == "normal" else "New taint policy"
     rect(d, (8, 6, 785, 141), fill=(29, 31, 32), outline=LINE)
     txt(d, (290, 18), title, fnt=F)
     rect(d, (24, 47, 740, 81), fill=(17, 23, 24), outline=(80, 150, 180))
     txt(d, (30, 58), value, fill=FAINT, fnt=F_MONO)
-    txt(d, (29, 92), "Enter a name. VibeSec will create a separate YAML file inside the tool policy folder: rules/policies/.", fnt=F)
+    txt(d, (29, 92), "Enter a name. SecureCycle will create a separate YAML file inside the tool policy folder: rules/policies/.", fnt=F)
     txt(d, (29, 116), "Press 'Enter' to confirm or 'Escape' to cancel", fnt=F)
     y = 405 if kind == "normal" else 480
     hi(d, (8, 6, 785, 141))
@@ -426,7 +426,7 @@ def copy_all():
     button(d, 144, 411, 100, 31, "Generate", fill=(45, 72, 32), outline=ACCENT, text=ACCENT)
     button(d, 264, 410, 118, 42, "Copy all")
     rect(d, (1282, 697, 1720, 758), fill=PANEL2, outline=LINE)
-    txt(d, (1318, 724), "VibeSec: Project prompt copied to clipboard.", fnt=F)
+    txt(d, (1318, 724), "SecureCycle: Project prompt copied to clipboard.", fnt=F)
     hi(d, (263, 398, 383, 453))
     hi(d, (1282, 697, 1720, 758))
     return save(ASSETS / "12_copy_all_prompt.png", img)
@@ -449,7 +449,7 @@ def scan_four_files():
         txt(d, (x + 18, 254), sev, fill=color, fnt=F_MONO_SMALL)
         txt(d, (x + 18, 288), num, fnt=font(30, True))
     rect(d, (1240, 704, 1840, 824), fill=PANEL2, outline=LINE)
-    txt(d, (1282, 752), "VibeSec: Scanning 4 files... (1/4) .vibesec.yaml", fnt=F)
+    txt(d, (1282, 752), "SecureCycle: Scanning 4 files... (1/4) .vibesec.yaml", fnt=F)
     button(d, 1755, 785, 64, 32, "Cancel", fill=(67, 145, 190))
     hi(d, (1069, 27, 1316, 103))
     hi(d, (1239, 704, 1841, 831))
@@ -480,7 +480,7 @@ def make_deck():
     title = prs.slides.add_slide(prs.slide_layouts[6])
     title.background.fill.solid()
     title.background.fill.fore_color.rgb = base.NAVY
-    base.add_text(title, 0.8, 1.0, 11.7, 0.6, "VibeSec Functionality Testing", size=36, color=base.WHITE, bold=True)
+    base.add_text(title, 0.8, 1.0, 11.7, 0.6, "SecureCycle Functionality Testing", size=36, color=base.WHITE, bold=True)
     base.add_text(title, 0.82, 1.8, 11.6, 0.8, "PowerPoint rebuilt around the highlighted running-tool screenshots", size=25, color=base.WHITE, bold=True)
     base.add_text(title, 0.85, 3.05, 11.0, 0.7, "Covers API keys, logs, rules, policy creation, scanning, findings, prompt generation, clipboard copy, and architecture diagrams.", size=16, color=base.LINE)
 

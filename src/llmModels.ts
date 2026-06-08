@@ -116,7 +116,7 @@ export function validateProviderSelection(
   if (!trimmedModel || trimmedModel === PROVIDER_DEFAULT_MODEL.custom) {
     return provider === "custom"
       ? "Custom / Other needs an exact model id before testing or generating prompts."
-      : `${PROVIDER_LABEL[provider]} needs a model id. Pick a model in VibeSec Settings.`;
+      : `${PROVIDER_LABEL[provider]} needs a model id. Pick a model in SecureCycle Settings.`;
   }
 
   if (provider === "custom") {

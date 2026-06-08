@@ -340,7 +340,7 @@ const PROVIDERS: { id: LlmProvider; label: string; hint: string }[] = [
   { id: "anthropic", label: PROVIDER_LABEL.anthropic, hint: "Claude API key" },
   { id: "openai",    label: PROVIDER_LABEL.openai,    hint: "OpenAI API key" },
   { id: "gemini",    label: PROVIDER_LABEL.gemini,    hint: "Google AI Studio API key" },
-  { id: "groq",      label: PROVIDER_LABEL.groq,      hint: "Groq API key. Paste your gsk_ key only; VibeSec uses the Groq endpoint automatically" },
+  { id: "groq",      label: PROVIDER_LABEL.groq,      hint: "Groq API key. Paste your gsk_ key only; SecureCycle uses the Groq endpoint automatically" },
   { id: "custom",    label: PROVIDER_LABEL.custom,    hint: "API key for another OpenAI-compatible LLM provider" },
 ];
 
@@ -381,7 +381,7 @@ const ApiKeyManager: React.FC<ApiKeyManagerProps> = ({ activeProvider, onSave, o
         <div style={{ padding: "14px 16px", borderBottom: "1px solid var(--border-soft)" }}>
           <div className="help" style={{ margin: 0 }}>
             Save a separate API key for each provider. Keys are stored in VS Code SecretStorage, not in settings.json.
-            The active provider is <strong>{activeProvider}</strong>. Saving a key also selects that provider. For Groq, paste only the <strong>gsk_</strong> API key and VibeSec will use the Groq endpoint automatically. For Custom / Other, write the exact model name and API endpoint above, then click Test.
+            The active provider is <strong>{activeProvider}</strong>. Saving a key also selects that provider. For Groq, paste only the <strong>gsk_</strong> API key and SecureCycle will use the Groq endpoint automatically. For Custom / Other, write the exact model name and API endpoint above, then click Test.
           </div>
         </div>
         {PROVIDERS.map((provider) => (

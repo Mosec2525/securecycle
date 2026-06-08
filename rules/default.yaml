@@ -1,5 +1,5 @@
 # =============================================================================
-# VibeSec Extended Ruleset — OWASP Top 10 (2021)
+# SecureCycle Extended Ruleset — OWASP Top 10 (2021)
 # =============================================================================
 #
 # File:        rules/default.yaml  (or a sibling rule pack)
@@ -11,7 +11,7 @@
 # -----------------------------------------------------------------------------
 # Attribution & copyright notice
 # -----------------------------------------------------------------------------
-# This rule pack is original work written for the VibeSec project.
+# This rule pack is original work written for the SecureCycle project.
 #
 # Each rule cites the following PUBLIC, NON-PROFIT, COPYRIGHT-CLEAR reference
 # taxonomies *by identifier only* (e.g. "CWE-78", "A03:2021"). Short factual
@@ -44,7 +44,7 @@
 # commercially licensed source. The Semgrep pattern syntax itself is an
 # open specification.
 #
-# License: MIT (same as the rest of the VibeSec project)
+# License: MIT (same as the rest of the SecureCycle project)
 # =============================================================================
 
 

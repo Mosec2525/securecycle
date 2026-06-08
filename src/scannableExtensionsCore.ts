@@ -1,6 +1,6 @@
 import * as path from "path";
 
-// Source of truth for "which files can VibeSec scan" outside VS Code.
+// Source of truth for "which files can SecureCycle scan" outside VS Code.
 export const DEFAULT_SCANNABLE_EXTENSIONS: readonly string[] = [
   ".py",  ".pyi",
   ".js",  ".jsx",  ".mjs",  ".cjs",

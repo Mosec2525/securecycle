@@ -210,7 +210,7 @@ const IconRefresh: React.FC<{ className?: string }> = ({ className }) => (
 
 const QUICK_ACTIONS: QuickActionDef[] = [
   { id: "scan",            title: "Scan project",      sub: "Run full Semgrep sweep",              icon: IconPlay    },
-  { id: "openPolicy",      title: "Open policy file",  sub: "Choose any VibeSec policy to open",  icon: IconFile    },
+  { id: "openPolicy",      title: "Open policy file",  sub: "Choose any SecureCycle policy to open",  icon: IconFile    },
   { id: "reloadPolicy",    title: "Reload policy",     sub: "Re-parse rules from disk",           icon: IconRefresh },
   { id: "newNormalPolicy", title: "New normal policy", sub: "Create a named normal scan policy",  icon: IconFile    },
   { id: "newTaintPolicy",  title: "New taint policy",  sub: "Create a named taint scan policy",   icon: IconFile    },

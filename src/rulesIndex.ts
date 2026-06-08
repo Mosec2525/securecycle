@@ -375,7 +375,7 @@ function readWorkspacePolicyState(workspaceRoot: string | undefined, extensionPa
       if (activeNormalPolicyFile) { activePolicyFiles.add(activeNormalPolicyFile); }
       if (activeTaintPolicyFile) { activePolicyFiles.add(activeTaintPolicyFile); }
 
-      // Backward compatibility: old VibeSec versions stored a single activePolicyFile.
+      // Backward compatibility: old SecureCycle versions stored a single activePolicyFile.
       const legacy = normalizeRelPath(obj.activePolicyFile);
       if (legacy && activePolicyFiles.size === 0) {
         activePolicyFiles.add(legacy);
@@ -509,7 +509,7 @@ export function buildRulesIndex(
       path:       item.rel,
       absPath:    item.abs,
       source:     "custom",
-      desc:       "Tool policy file — stored inside VibeSec's rules/policies folder.",
+      desc:       "Tool policy file — stored inside SecureCycle's rules/policies folder.",
       updatedAt:  fileMtimeIso(item.abs),
       ruleCount:  parsed.rules.length,
       severities: parsed.severities,
@@ -520,7 +520,7 @@ export function buildRulesIndex(
   }
 
   // Workspace-created .vibesec*.yaml files are intentionally not listed here.
-  // New policies created from VibeSec are stored in the tool policy folder
+  // New policies created from SecureCycle are stored in the tool policy folder
   // (rules/policies) so the workspace file tree stays clean.
 
 

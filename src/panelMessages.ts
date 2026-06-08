@@ -1,4 +1,4 @@
-// Shared message-protocol types for the VibeSec analysis webview.
+// Shared message-protocol types for the SecureCycle analysis webview.
 //
 // SOURCE OF TRUTH for the panel <-> extension wire format. A verbatim copy of
 // these types lives in `webview/types.ts` so the React bundle compiles standalone.
