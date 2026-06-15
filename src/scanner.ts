@@ -89,7 +89,9 @@ function parseSemgrepOutput(json: string): Finding[] {
       // references, likelihood, impact, technology, …) without us pre-filtering.
       metadata:  r.extra?.metadata,
     };
-    const taint = parseDataflowTrace(r.extra?.dataflow_trace, r.path, finding);
+    const taint =
+      parseDataflowTrace(r.extra?.dataflow_trace, r.path, finding) ??
+      inferTaintFlow(finding);
     if (taint) {
       finding.taint = taint;
     }
@@ -168,7 +170,135 @@ function parseDataflowTrace(
     }
   }
 
-  return { source, sink, intermediates };
+  return { source, sink, intermediates, origin: "semgrep-trace" };
+}
+
+function inferTaintFlow(finding: Finding): TaintFlow | undefined {
+  if (!isTaintRule(finding.ruleId)) { return undefined; }
+
+  const absPath = path.isAbsolute(finding.filePath)
+    ? finding.filePath
+    : path.resolve(finding.filePath);
+  let lines: string[] = [];
+  try {
+    lines = fs.readFileSync(absPath, "utf-8").split(/\r?\n/);
+  } catch {
+    lines = [];
+  }
+
+  const sinkLine = Math.max(0, finding.startLine);
+  const sinkSnippet =
+    lines[sinkLine]?.trim() ||
+    finding.snippet.split(/\r?\n/)[0]?.trim() ||
+    "Tainted data reaches a risky sink";
+  const sink: TaintLocation = {
+    filePath: absPath,
+    line:     sinkLine,
+    snippet:  sinkSnippet,
+  };
+
+  const sinkVariable = extractLikelySinkVariable(finding.ruleId, sinkSnippet);
+  const source = findLikelySource(lines, sinkLine, sinkVariable, absPath);
+  const intermediates: TaintLocation[] = [];
+
+  if (sinkVariable) {
+    intermediates.push({
+      filePath: absPath,
+      line:     source.line,
+      snippet:  `${sinkVariable} carries untrusted input toward the sink`,
+    });
+  }
+
+  intermediates.push({
+    filePath: absPath,
+    line:     sinkLine,
+    snippet:  missingGuardMessage(finding.ruleId),
+  });
+
+  return {
+    source,
+    sink,
+    intermediates,
+    origin: "securecycle-inferred",
+  };
+}
+
+function isTaintRule(ruleId: string): boolean {
+  return ruleId.includes(".taint.");
+}
+
+function extractLikelySinkVariable(ruleId: string, sinkSnippet: string): string | undefined {
+  const explicitArg = /\(([^(),]+)(?:,|\))/.exec(sinkSnippet)?.[1]?.trim();
+  const cleanArg = explicitArg?.replace(/^[*&]+/, "").trim();
+  if (cleanArg && /^[A-Za-z_$][\w$]*$/.test(cleanArg)) { return cleanArg; }
+
+  if (ruleId.includes("ssrf")) {
+    return /\brequests\.\w+\(([^),]+)/.exec(sinkSnippet)?.[1]?.trim();
+  }
+  if (ruleId.includes("path-traversal")) {
+    return /\b(?:open|readFile|send_file|sendFile)\(([^),]+)/.exec(sinkSnippet)?.[1]?.trim();
+  }
+  if (ruleId.includes("command-injection")) {
+    return /\b(?:system|popen|exec|run|spawn)\(([^),]+)/.exec(sinkSnippet)?.[1]?.trim();
+  }
+  return undefined;
+}
+
+function findLikelySource(
+  lines: string[],
+  sinkLine: number,
+  sinkVariable: string | undefined,
+  absPath: string,
+): TaintLocation {
+  const sourcePattern =
+    /\b(request\.(?:args|form|json|values|cookies|get_json)\b|req\.(?:query|body|params|headers|cookies)\b|input\s*\()/;
+  const escapedVar = sinkVariable?.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const assignmentPattern = escapedVar
+    ? new RegExp(`\\b${escapedVar}\\s*=\\s*.*${sourcePattern.source}`)
+    : undefined;
+
+  if (assignmentPattern) {
+    for (let i = Math.min(sinkLine, lines.length - 1); i >= 0; i -= 1) {
+      const line = lines[i]?.trim() ?? "";
+      if (!line) { continue; }
+      if (assignmentPattern.test(line)) {
+        return { filePath: absPath, line: i, snippet: line };
+      }
+    }
+  }
+
+  for (let i = Math.min(sinkLine, lines.length - 1); i >= 0; i -= 1) {
+    const line = lines[i]?.trim() ?? "";
+    if (!line) { continue; }
+    if (sourcePattern.test(line)) {
+      return { filePath: absPath, line: i, snippet: line };
+    }
+  }
+
+  return {
+    filePath: absPath,
+    line:     sinkLine,
+    snippet:  "Untrusted input source inferred from taint rule",
+  };
+}
+
+function missingGuardMessage(ruleId: string): string {
+  if (ruleId.includes("ssrf")) {
+    return "Missing allowlist, private-IP rejection, or URL normalization before outbound request";
+  }
+  if (ruleId.includes("path-traversal")) {
+    return "Missing path normalization and trusted base-directory check before file access";
+  }
+  if (ruleId.includes("command-injection")) {
+    return "Missing command allowlist or safe argument-list construction before shell execution";
+  }
+  if (ruleId.includes("sql-injection")) {
+    return "Missing parameterized query boundary before database execution";
+  }
+  if (ruleId.includes("xss")) {
+    return "Missing output encoding or sanitization before response/render sink";
+  }
+  return "Missing sanitizer or validation boundary between source and sink";
 }
 
 // ── Temp file for custom rules ────────────────────────────────────────────────

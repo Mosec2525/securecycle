@@ -86,6 +86,7 @@ export interface PanelTaint {
   source:        PanelTaintStep;
   sink:          PanelTaintStep;
   intermediates: PanelTaintStep[];
+  origin?:        "semgrep-trace" | "securecycle-inferred";
 }
 
 export interface PanelFinding {
@@ -154,6 +155,7 @@ export type WebviewToExtension =
   | { type: "scanCancel" }
   | { type: "goToFinding"; findingId: string }
   | { type: "goToLocation"; absPath: string; line: number }
+  | { type: "openDataFlow"; findingId: string }
   | { type: "copyPromptForVuln"; findingId: string }
   | { type: "copyPromptForFile"; filePath: string }
   | { type: "copyPromptForAll" }
@@ -189,6 +191,7 @@ export function toPanelFinding(f: Finding, workspaceRoot: string | undefined): P
       source:        step(f.taint.source),
       sink:          step(f.taint.sink),
       intermediates: f.taint.intermediates.map(step),
+      origin:        f.taint.origin,
     };
   }
   return out;

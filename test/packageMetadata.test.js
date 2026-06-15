@@ -5,7 +5,7 @@ const test = require("node:test");
 test("package manifest includes release and Marketplace metadata", () => {
   const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
 
-  assert.equal(pkg.version, "1.0.0");
+  assert.equal(pkg.version, "1.0.1");
   assert.equal(pkg.name, "securecycle");
   assert.equal(pkg.displayName, "SecureCycle");
   assert.equal(pkg.publisher, "mosec2525");

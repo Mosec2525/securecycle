@@ -195,6 +195,9 @@ export const AnalysisPanel: React.FC<Props> = ({
   const onOpenSource = (f: PanelFinding): void => {
     postMessage({ type: "goToFinding", findingId: f.id });
   };
+  const onViewDataFlow = (id: string): void => {
+    postMessage({ type: "openDataFlow", findingId: id });
+  };
   const onJumpToLocation = (absPath: string, line: number): void => {
     postMessage({ type: "goToLocation", absPath, line });
   };
@@ -458,6 +461,7 @@ export const AnalysisPanel: React.FC<Props> = ({
                         copied={copiedKey === v.id}
                         onGoToFix={() => setTab("fullfix")}
                         onOpenSource={onOpenSource}
+                        onViewDataFlow={onViewDataFlow}
                         onJumpToLocation={onJumpToLocation}
                       />
                     ))}

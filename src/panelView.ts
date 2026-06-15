@@ -3,6 +3,7 @@ import * as path from "path";
 import * as vscode from "vscode";
 import { isScannablePath, getScannableExtensions } from "./scannableExtensions";
 import { IGNORED_DIR_NAMES } from "./scanProvider";
+import { openDataFlowPanel } from "./dataFlowPanel";
 import type { Finding } from "./types";
 import type { FindingsProvider } from "./findingsProvider";
 import {
@@ -214,6 +215,27 @@ export class PanelController
             message: `SecureCycle: Could not open ${msg.absPath}: ${detail}`,
           });
         }
+        break;
+      }
+      case "openDataFlow": {
+        const f = this.findFindingById(msg.findingId);
+        if (!f) {
+          this.postMessage({
+            type: "toast",
+            tone: "error",
+            message: "SecureCycle: Could not find that finding. Run the scan again.",
+          });
+          break;
+        }
+        if (!f.taint) {
+          this.postMessage({
+            type: "toast",
+            tone: "warn",
+            message: "SecureCycle: This finding has no data-flow graph.",
+          });
+          break;
+        }
+        openDataFlowPanel(this.context, f, this.workspaceRoot());
         break;
       }
       case "copyPromptForVuln": {

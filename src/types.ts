@@ -37,6 +37,12 @@ export interface TaintFlow {
   sink:   TaintLocation;
   /** Zero or more variable assignments between source and sink. */
   intermediates: TaintLocation[];
+  /**
+   * Where the flow came from. Semgrep OSS can report taint findings without
+   * emitting `extra.dataflow_trace`; in that case SecureCycle builds a local,
+   * explainable source-to-sink graph from the matched line and nearby code.
+   */
+  origin?: "semgrep-trace" | "securecycle-inferred";
 }
 
 // ── Severity ──────────────────────────────────────────────────────────────────

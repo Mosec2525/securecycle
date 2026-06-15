@@ -748,6 +748,34 @@
   color: var(--text);
 }
 
+.vs-flow-open-btn {
+  all: unset;
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 24px;
+  padding: 0 8px;
+  border-radius: 5px;
+  border: 1px solid var(--accent-border);
+  background: var(--accent-soft);
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 10.5px;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+.vs-flow-open-btn:hover {
+  background: color-mix(in srgb, var(--accent-soft) 72%, var(--surface-hover));
+  color: var(--text);
+}
+.vs-flow-open-btn:focus-visible {
+  outline: 1px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
 /* ---------- LOADING SKELETONS ---------- */
 .vs-skel {
   background: linear-gradient(90deg, var(--surface) 0%, var(--surface-hover) 50%, var(--surface) 100%);
