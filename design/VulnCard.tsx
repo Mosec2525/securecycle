@@ -10,6 +10,7 @@ interface Props {
   copied:    boolean;
   onGoToFix: (id: string) => void;
   onOpenSource: (f: PanelFinding) => void;
+  onViewDataFlow: (id: string) => void;
   /** Jump to an arbitrary file:line — used by taint flow rows. */
   onJumpToLocation: (absPath: string, line: number) => void;
 }
@@ -22,6 +23,7 @@ export const VulnCard: React.FC<Props> = ({
   copied,
   onGoToFix,
   onOpenSource,
+  onViewDataFlow,
   onJumpToLocation,
 }) => {
   return (
@@ -78,7 +80,20 @@ export const VulnCard: React.FC<Props> = ({
         <div className="vs-fix">
           <div className="vs-fix-head">
             <Eye size={11} />
-            <span>Details</span>
+            <span>Investigation</span>
+            {v.taint && (
+              <button
+                type="button"
+                className="vs-flow-open-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onViewDataFlow(v.id);
+                }}
+              >
+                <Eye size={11} />
+                View data flow
+              </button>
+            )}
           </div>
           <div
             style={{
@@ -120,9 +135,6 @@ export const VulnCard: React.FC<Props> = ({
               </div>
             ))}
           </div>
-          {v.taint && (
-            <TaintFlow taint={v.taint} onJump={onJumpToLocation} />
-          )}
           <div
             style={{
               padding: "9px 10px",

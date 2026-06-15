@@ -2,7 +2,7 @@
   "name": "securecycle",
   "displayName": "SecureCycle",
   "description": "Security across every phase of the software development lifecycle with local Semgrep scanning and AI-assisted fix prompts.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "mosec2525",
   "license": "MIT",
   "repository": {
